@@ -1745,15 +1745,19 @@ function pickScript(idx) {
     <div style="margin-top:8px;">
       <input type="text" id="film-title-input" class="mac-input" value="${script.title}"
         style="width:100%;padding:4px 6px;font-size:13px;font-family:Chicago,Geneva,sans-serif;border:2px inset #999;background:#fff;"
-        onkeydown="if(event.key==='Enter'){confirmTitle(this.value.trim())}">
+        onkeydown="if(event.key==='Enter'){window._pendingMovieTitle=this.value.trim();confirmTitle(this.value.trim())}"
+        oninput="window._pendingMovieTitle=this.value.trim()">
     </div>
   `, [
     { text: 'Cancel', action: () => { window._pendingPickedScript = null; } },
-    { text: 'OK', action: () => { const v = document.getElementById('film-title-input'); confirmTitle(v ? v.value.trim() : ''); } }
+    { text: 'OK', action: () => { confirmTitle(window._pendingMovieTitle || ''); } }
   ]);
   setTimeout(() => {
     const inp = document.getElementById('film-title-input');
-    if (inp) { inp.focus(); inp.select(); }
+    if (inp) {
+      inp.focus(); inp.select();
+      window._pendingMovieTitle = inp.value.trim();
+    }
   }, 50);
 }
 
