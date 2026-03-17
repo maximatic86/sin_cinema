@@ -1,11 +1,1593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sin Cinema</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sim Cinema Deluxe</title>
+<style>
+/* ===== CLASSIC MAC OS 9 STYLING ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+@font-face {
+  font-family: 'Chicago';
+  src: local('Chicago');
+}
+ 
+body {
+  font-family: 'Chicago', 'Geneva', 'Lucida Grande', 'Charcoal', monospace;
+  font-size: 12px;
+  background: #6699cc;
+  color: #000;
+  user-select: none;
+  overflow: hidden;
+  height: 100vh;
+}
+ 
+/* Mac OS 9 Desktop */
+#desktop {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+ 
+/* Menu Bar */
+#menubar {
+  height: 20px;
+  background: linear-gradient(to bottom, #fff 0%, #ddd 100%);
+  border-bottom: 1px solid #999;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: bold;
+  position: relative;
+  z-index: 1000;
+}
+ 
+#menubar .apple-menu { margin-right: 16px; font-size: 14px; }
+#menubar .menu-item { margin-right: 16px; cursor: default; padding: 0 4px; }
+#menubar .menu-item:hover { background: #0000cc; color: #fff; }
+#menubar .spacer { flex: 1; }
+#menubar .clock { font-weight: normal; font-size: 11px; }
+ 
+/* Window */
+.mac-window {
+  position: absolute;
+  background: #ddd;
+  border: 1px solid #000;
+  border-radius: 0;
+  box-shadow: 1px 1px 0 #000, 2px 2px 0 rgba(0,0,0,0.3);
+  min-width: 300px;
+}
+ 
+.window-titlebar {
+  height: 20px;
+  background: linear-gradient(to bottom, #eee 0%, #bbb 50%, #ccc 100%);
+  border-bottom: 1px solid #999;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  cursor: default;
+}
+ 
+.window-titlebar.inactive {
+  background: linear-gradient(to bottom, #ddd 0%, #ccc 100%);
+}
+ 
+.titlebar-btn {
+  width: 12px; height: 12px;
+  border: 1px solid #666;
+  border-radius: 0;
+  margin-right: 4px;
+  background: #ddd;
+  cursor: pointer;
+}
+ 
+.titlebar-btn.close { background: #ff6b6b; border-color: #c0392b; }
+.titlebar-btn.minimize { background: #f9ca24; border-color: #f39c12; }
+.titlebar-btn.zoom { background: #6ab04c; border-color: #27ae60; }
+ 
+.window-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+ 
+.window-content {
+  padding: 8px;
+  background: #fff;
+  overflow-y: auto;
+}
+ 
+/* Mac Buttons */
+.mac-btn {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 3px 16px;
+  border: 2px solid #000;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, #fff 0%, #ddd 100%);
+  cursor: pointer;
+  outline: none;
+}
+.mac-btn:hover { background: linear-gradient(to bottom, #eee 0%, #ccc 100%); }
+.mac-btn:active { background: #bbb; }
+.mac-btn.primary {
+  border: 3px solid #000;
+  border-radius: 6px;
+  background: linear-gradient(to bottom, #fff 0%, #ccc 100%);
+  font-weight: bold;
+}
+.mac-btn:disabled { opacity: 0.5; cursor: default; }
+ 
+/* Mac List */
+.mac-list {
+  border: 1px solid #999;
+  background: #fff;
+  overflow-y: auto;
+  font-size: 11px;
+}
+.mac-list-item {
+  padding: 2px 6px;
+  cursor: default;
+  border-bottom: 1px solid #eee;
+}
+.mac-list-item:hover { background: #e8e8e8; }
+.mac-list-item.selected { background: #0000cc; color: #fff; }
+ 
+/* Mac Select / Dropdown */
+.mac-select {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 2px 4px;
+  border: 1px solid #999;
+  background: #fff;
+}
+ 
+/* Progress bar */
+.mac-progress {
+  width: 100%;
+  height: 14px;
+  border: 1px solid #999;
+  background: #fff;
+  position: relative;
+}
+.mac-progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    #0000cc,
+    #0000cc 4px,
+    #3333ff 4px,
+    #3333ff 8px
+  );
+  transition: width 0.3s;
+}
+ 
+/* Tabs */
+.mac-tabs {
+  display: flex;
+  border-bottom: 1px solid #999;
+  background: #ddd;
+}
+.mac-tab {
+  padding: 4px 16px;
+  cursor: pointer;
+  border: 1px solid #999;
+  border-bottom: none;
+  margin-right: -1px;
+  background: #ccc;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+}
+.mac-tab.active {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+}
+ 
+/* Dialog overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+ 
+.dialog-box {
+  background: #ddd;
+  border: 2px solid #000;
+  padding: 16px;
+  min-width: 320px;
+  max-width: 480px;
+  box-shadow: 2px 2px 0 #000;
+}
+ 
+.dialog-box h3 {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+ 
+.dialog-box p {
+  font-size: 11px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+ 
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+ 
+/* Game specific layouts */
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  padding: 6px 8px;
+  background: #eee;
+  border-bottom: 1px solid #999;
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.stat-item { display: flex; gap: 4px; align-items: center; }
+.stat-label { font-weight: bold; }
+.stat-value { color: #333; }
+.stat-value.negative { color: #c0392b; }
+.stat-value.positive { color: #27ae60; }
+ 
+.section-header {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 0;
+  border-bottom: 1px solid #ccc;
+  margin: 8px 0 4px;
+}
+ 
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+ 
+.grid-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+ 
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  font-size: 11px;
+}
+ 
+.form-row label { min-width: 80px; font-weight: bold; }
+ 
+.info-box {
+  border: 1px solid #999;
+  background: #ffffcc;
+  padding: 6px 8px;
+  font-size: 11px;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+ 
+.chart-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0;
+  font-size: 10px;
+}
+.chart-bar-fill {
+  height: 12px;
+  background: #0000cc;
+  min-width: 2px;
+}
+.chart-bar-label { min-width: 100px; text-align: right; }
+.chart-bar-value { min-width: 50px; }
+ 
+/* Scrollbar styling */
+.window-content::-webkit-scrollbar { width: 14px; }
+.window-content::-webkit-scrollbar-track { background: #ccc; border: 1px solid #999; }
+.window-content::-webkit-scrollbar-thumb { background: #aaa; border: 1px solid #666; }
+ 
+/* Star rating */
+.stars { color: #f39c12; letter-spacing: 1px; }
+ 
+/* Top 10 table */
+.top10-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.top10-table th { text-align: left; border-bottom: 2px solid #000; padding: 2px 6px; font-size: 10px; }
+.top10-table td { padding: 2px 6px; border-bottom: 1px solid #ddd; }
+.top10-table tr.mine { background: #ffffcc; font-weight: bold; }
+.top10-table tr:hover { background: #e8e8e8; }
+ 
+/* Notification area */
+#notifications {
+  position: fixed;
+  bottom: 30px;
+  right: 10px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.notification {
+  background: #ffffcc;
+  border: 1px solid #000;
+  padding: 6px 10px;
+  font-size: 11px;
+  box-shadow: 1px 1px 0 #000;
+  animation: fadeIn 0.3s;
+  max-width: 280px;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+ 
+/* Startup screen */
+#startup-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+#startup-screen h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+#startup-screen h2 {
+  font-size: 14px;
+  font-weight: normal;
+  color: #666;
+  margin-bottom: 24px;
+}
+#startup-screen .subtitle {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 24px;
+}
+ 
+.company-input {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 2px solid #000;
+  width: 280px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+ 
+#game-area { display: none; }
+ 
+/* Report card */
+.report-card {
+  border: 2px solid #000;
+  padding: 12px;
+  margin: 8px 0;
+  background: #f9f9f9;
+}
+.report-card h4 { margin-bottom: 6px; font-size: 12px; }
+.report-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 11px; border-bottom: 1px dotted #ccc; }
+ 
+/* Cast card */
+.cast-card {
+  border: 1px solid #999;
+  padding: 6px;
+  margin: 4px 0;
+  background: #f9f9f9;
+  font-size: 11px;
+}
+.cast-card .name { font-weight: bold; font-size: 12px; }
+.cast-card .details { color: #666; margin-top: 2px; }
+.cast-card .salary { color: #c0392b; font-weight: bold; }
+ 
+/* Film strip decoration */
+.film-strip {
+  background: #222;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 1px solid #000;
+}
+ 
+/* Week counter animation */
+.week-display {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px;
+  color: #0000cc;
+}
+</style>
 </head>
 <body>
-    <h1>Sin Cinema</h1>
+ 
+<!-- STARTUP SCREEN -->
+<div id="startup-screen">
+  <h1>Sim Cinema Deluxe</h1>
+  <h2>A Hollywood Production Simulation</h2>
+  <div class="subtitle">Clone &bull; v1.0</div>
+  <div style="margin-bottom:16px; font-size:11px;">Name your production company:</div>
+  <input type="text" class="company-input" id="company-name" value="Starlight Pictures" placeholder="Company Name">
+  <br>
+  <button class="mac-btn primary" onclick="startGame()">Start New Game</button>
+  <div style="margin-top:24px; font-size:10px; color:#999;">
+    Inspired by the 1999 Macintosh classic by Shannon Schroeder
+  </div>
+</div>
+ 
+<!-- GAME AREA -->
+<div id="game-area">
+ 
+<!-- MENU BAR -->
+<div id="menubar">
+  <span class="apple-menu">&#63743;</span>
+  <span class="menu-item" onclick="showScreen('office')">Office</span>
+  <span class="menu-item" onclick="showScreen('production')">Production</span>
+  <span class="menu-item" onclick="showScreen('boxoffice')">Box Office</span>
+  <span class="menu-item" onclick="showScreen('talent')">Talent</span>
+  <span class="menu-item" onclick="showScreen('history')">History</span>
+  <span class="spacer"></span>
+  <span class="clock" id="clock"></span>
+</div>
+ 
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stat-item"><span class="stat-label">Company:</span> <span class="stat-value" id="stat-company">-</span></div>
+  <div class="stat-item"><span class="stat-label">Funds:</span> <span class="stat-value" id="stat-funds">-</span></div>
+  <div class="stat-item"><span class="stat-label">Reputation:</span> <span class="stat-value" id="stat-rep">-</span></div>
+  <div class="stat-item"><span class="stat-label">Week:</span> <span class="stat-value" id="stat-week">-</span></div>
+  <div class="stat-item"><span class="stat-label">Films Made:</span> <span class="stat-value" id="stat-films">-</span></div>
+</div>
+ 
+<!-- ===== OFFICE SCREEN ===== -->
+<div id="screen-office" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;">
+  <div class="window-titlebar">
+    <div class="titlebar-btn close"></div>
+    <div class="titlebar-btn minimize"></div>
+    <div class="titlebar-btn zoom"></div>
+    <div class="window-title" id="office-title">Office</div>
+  </div>
+  <div class="window-content" id="office-content" style="height:calc(100vh - 120px);">
+    <!-- Populated by JS -->
+  </div>
+</div>
+ 
+<!-- ===== PRODUCTION SCREEN ===== -->
+<div id="screen-production" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
+  <div class="window-titlebar">
+    <div class="titlebar-btn close" onclick="showScreen('office')"></div>
+    <div class="titlebar-btn minimize"></div>
+    <div class="titlebar-btn zoom"></div>
+    <div class="window-title">Production</div>
+  </div>
+  <div class="window-content" id="production-content" style="height:calc(100vh - 120px);">
+  </div>
+</div>
+ 
+<!-- ===== BOX OFFICE SCREEN ===== -->
+<div id="screen-boxoffice" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
+  <div class="window-titlebar">
+    <div class="titlebar-btn close" onclick="showScreen('office')"></div>
+    <div class="titlebar-btn minimize"></div>
+    <div class="titlebar-btn zoom"></div>
+    <div class="window-title">Box Office</div>
+  </div>
+  <div class="window-content" id="boxoffice-content" style="height:calc(100vh - 120px);">
+  </div>
+</div>
+ 
+<!-- ===== TALENT SCREEN ===== -->
+<div id="screen-talent" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
+  <div class="window-titlebar">
+    <div class="titlebar-btn close" onclick="showScreen('office')"></div>
+    <div class="titlebar-btn minimize"></div>
+    <div class="titlebar-btn zoom"></div>
+    <div class="window-title">Talent Agency</div>
+  </div>
+  <div class="window-content" id="talent-content" style="height:calc(100vh - 120px);">
+  </div>
+</div>
+ 
+<!-- ===== HISTORY SCREEN ===== -->
+<div id="screen-history" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
+  <div class="window-titlebar">
+    <div class="titlebar-btn close" onclick="showScreen('office')"></div>
+    <div class="titlebar-btn minimize"></div>
+    <div class="titlebar-btn zoom"></div>
+    <div class="window-title">Film History</div>
+  </div>
+  <div class="window-content" id="history-content" style="height:calc(100vh - 120px);">
+  </div>
+</div>
+ 
+<!-- DIALOG CONTAINER -->
+<div id="dialog-container"></div>
+ 
+<!-- NOTIFICATIONS -->
+<div id="notifications"></div>
+ 
+</div><!-- /game-area -->
+ 
+<script>
+// ===================================================================
+// SIM CINEMA DELUXE - GAME ENGINE
+// ===================================================================
+ 
+// ---- DATA: Names, genres, scripts ----
+const FIRST_NAMES = [
+  'James','Mary','Robert','Patricia','John','Jennifer','Michael','Linda',
+  'David','Elizabeth','William','Barbara','Richard','Susan','Joseph','Jessica',
+  'Thomas','Sarah','Charles','Karen','Christopher','Nancy','Daniel','Lisa',
+  'Matthew','Betty','Anthony','Margaret','Mark','Sandra','Donald','Ashley',
+  'Steven','Kimberly','Paul','Emily','Andrew','Donna','Joshua','Michelle',
+  'Kenneth','Dorothy','Kevin','Carol','Brian','Amanda','George','Melissa',
+  'Timothy','Deborah','Ronald','Stephanie','Edward','Rebecca','Jason','Sharon',
+  'Jeffrey','Laura','Ryan','Cynthia','Jacob','Kathleen','Gary','Amy',
+  'Nicholas','Angela','Eric','Shirley','Jonathan','Anna','Stephen','Brenda',
+  'Larry','Pamela','Justin','Emma','Scott','Nicole','Brandon','Helen',
+  'Benjamin','Samantha','Samuel','Katherine','Raymond','Christine','Gregory','Debra',
+  'Frank','Rachel','Alexander','Carolyn','Patrick','Janet','Jack','Catherine',
+  'Dennis','Maria','Jerry','Heather','Tyler','Diane','Aaron','Ruth',
+  'Jose','Julie','Adam','Olivia','Nathan','Joyce','Henry','Virginia',
+  'Douglas','Victoria','Zachary','Kelly','Peter','Lauren','Kyle','Christina',
+  'Sophia','Isabella','Mia','Charlotte','Amelia','Harper','Evelyn','Abigail',
+  'Ella','Scarlett','Grace','Chloe','Penelope','Riley','Layla','Lillian',
+  'Nora','Zoey','Mila','Aubrey','Hannah','Lily','Addison','Eleanor',
+  'Natalie','Luna','Savannah','Brooklyn','Leah','Zoe','Stella','Hazel',
+  'Ellie','Paisley','Audrey','Skylar','Violet','Claire','Bella','Aurora'
+];
+ 
+const LAST_NAMES = [
+  'Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis',
+  'Rodriguez','Martinez','Hernandez','Lopez','Gonzalez','Wilson','Anderson',
+  'Thomas','Taylor','Moore','Jackson','Martin','Lee','Perez','Thompson',
+  'White','Harris','Sanchez','Clark','Ramirez','Lewis','Robinson','Walker',
+  'Young','Allen','King','Wright','Scott','Torres','Nguyen','Hill',
+  'Flores','Green','Adams','Nelson','Baker','Hall','Rivera','Campbell',
+  'Mitchell','Carter','Roberts','Gomez','Phillips','Evans','Turner','Diaz',
+  'Parker','Cruz','Edwards','Collins','Reyes','Stewart','Morris','Morales',
+  'Murphy','Cook','Rogers','Gutierrez','Ortiz','Morgan','Cooper','Peterson',
+  'Bailey','Reed','Kelly','Howard','Ramos','Kim','Cox','Ward',
+  'Richardson','Watson','Brooks','Chavez','Wood','James','Bennett','Gray',
+  'Mendoza','Ruiz','Hughes','Price','Alvarez','Castillo','Sanders','Patel',
+  'Myers','Long','Ross','Foster','Jimenez','Powell','Jenkins','Perry',
+  'Russell','Sullivan','Bell','Coleman','Butler','Henderson','Barnes','Gonzales',
+  'Hamilton','Graham','Wallace','Woods','West','Jordan','Owens','Reynolds',
+  'Fisher','Ellis','Harrison','Gibson','McDonald','Marshall','Simmons','Burns'
+];
+ 
+const GENRES = [
+  { name: 'Action',    baseCost: 25, baseAppeal: 60, audienceSize: 1.3 },
+  { name: 'Comedy',    baseCost: 15, baseAppeal: 65, audienceSize: 1.2 },
+  { name: 'Drama',     baseCost: 12, baseAppeal: 55, audienceSize: 1.0 },
+  { name: 'Horror',    baseCost: 10, baseAppeal: 50, audienceSize: 0.9 },
+  { name: 'Sci-Fi',    baseCost: 30, baseAppeal: 55, audienceSize: 1.1 },
+  { name: 'Romance',   baseCost: 10, baseAppeal: 60, audienceSize: 1.0 },
+  { name: 'Thriller',  baseCost: 18, baseAppeal: 58, audienceSize: 1.1 },
+  { name: 'Animation', baseCost: 35, baseAppeal: 70, audienceSize: 1.4 },
+];
+ 
+const SCRIPT_QUALITY = ['Terrible','Poor','Below Average','Average','Above Average','Good','Great','Excellent','Masterpiece'];
+ 
+const SCRIPT_TITLES_PREFIX = [
+  'The Last','Dark','Eternal','Silent','Broken','Lost','Crimson','Secret',
+  'Final','Midnight','Shadow','Golden','Deadly','Fallen','Rising','Iron',
+  'Silver','Frozen','Burning','Hidden','Ancient','Savage','Wild','Twisted',
+  'Shattered','Wicked','Brave','Lonely','Haunted','Cursed'
+];
+ 
+const SCRIPT_TITLES_SUFFIX = [
+  'Dawn','Night','Heart','Storm','City','Road','Kingdom','Dream',
+  'Hour','Horizon','Legacy','Destiny','Redemption','Justice','Paradise','Phantom',
+  'Voyage','Code','Empire','Protocol','Conspiracy','Promise','Requiem','Eclipse',
+  'Frontier','Inferno','Obsession','Reckoning','Stranger','Vendetta'
+];
+ 
+const REVIEW_QUOTES_GOOD = [
+  'A triumph of cinema!','Absolutely riveting.','A must-see masterpiece.',
+  'Brilliantly crafted.','The best film this year.','A stunning achievement.',
+  'Captivating from start to finish.','A landmark film.','Extraordinary.',
+  'Unforgettable performances.'
+];
+ 
+const REVIEW_QUOTES_MID = [
+  'Entertaining enough.','Has its moments.','A decent effort.',
+  'Passable entertainment.','Nothing special, but watchable.',
+  'Some good scenes scattered throughout.','Worth a matinee.',
+  'A mixed bag of moments.'
+];
+ 
+const REVIEW_QUOTES_BAD = [
+  'A total disaster.','Avoid at all costs.','Painfully dull.',
+  'An insult to audiences.','What were they thinking?','A colossal waste of time.',
+  'Barely coherent.','A catastrophic misfire.','Unwatchable.',
+  'The worst film in recent memory.'
+];
+ 
+// ---- GAME STATE ----
+let game = null;
+ 
+function createInitialState(companyName) {
+  return {
+    companyName: companyName,
+    funds: 50, // in millions
+    reputation: 30, // 0-100
+    week: 1,
+    currentFilm: null,
+    completedFilms: [],
+    boxOfficeChart: [], // top 10 active films
+    availableActors: [],
+    availableDirectors: [],
+    availableCrew: [],
+    totalGross: 0,
+    totalSpent: 0,
+    gameOver: false,
+    newsLog: [],
+    weeksWithoutFilm: 0,
+    aiFilms: [], // competing films
+  };
+}
+ 
+// ---- TALENT GENERATION ----
+function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function randFloat(min, max) { return Math.random() * (max - min) + min; }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+ 
+function generateName() {
+  return pick(FIRST_NAMES) + ' ' + pick(LAST_NAMES);
+}
+ 
+function generateActor() {
+  const talent = randInt(20, 99);
+  const popularity = randInt(10, 95);
+  const salary = Math.round((talent * 0.05 + popularity * 0.08 + randFloat(-2, 5)) * 10) / 10;
+  return {
+    name: generateName(),
+    type: 'actor',
+    talent: talent,
+    popularity: popularity,
+    salary: Math.max(0.5, salary), // millions per film
+    id: Math.random().toString(36).substr(2, 9),
+  };
+}
+ 
+function generateDirector() {
+  const talent = randInt(25, 99);
+  const vision = randInt(20, 99);
+  const salary = Math.round((talent * 0.06 + vision * 0.04 + randFloat(-1, 4)) * 10) / 10;
+  return {
+    name: generateName(),
+    type: 'director',
+    talent: talent,
+    vision: vision,
+    salary: Math.max(0.5, salary),
+    id: Math.random().toString(36).substr(2, 9),
+  };
+}
+ 
+function generateScript(genre) {
+  const g = genre || pick(GENRES);
+  const qualityIdx = Math.floor(Math.random() * Math.random() * SCRIPT_QUALITY.length * 1.5);
+  const quality = clamp(qualityIdx, 0, SCRIPT_QUALITY.length - 1);
+  const title = pick(SCRIPT_TITLES_PREFIX) + ' ' + pick(SCRIPT_TITLES_SUFFIX);
+  return {
+    title: title,
+    genre: g.name,
+    quality: quality, // 0-8
+    qualityLabel: SCRIPT_QUALITY[quality],
+    baseCost: g.baseCost,
+    baseAppeal: g.baseAppeal,
+    audienceSize: g.audienceSize,
+  };
+}
+ 
+function refreshTalentPool() {
+  game.availableActors = [];
+  game.availableDirectors = [];
+  for (let i = 0; i < 8; i++) game.availableActors.push(generateActor());
+  for (let i = 0; i < 5; i++) game.availableDirectors.push(generateDirector());
+  // Sort by talent desc
+  game.availableActors.sort((a, b) => b.popularity - a.popularity);
+  game.availableDirectors.sort((a, b) => b.talent - a.talent);
+}
+ 
+// ---- FILM PRODUCTION ----
+const PRODUCTION_PHASES = ['development','casting','filming','post-production','test-screening','release'];
+ 
+function createNewFilm() {
+  return {
+    phase: 'development',
+    script: null,
+    genre: null,
+    director: null,
+    cast: [], // up to 3 actors
+    budget: 0,
+    marketingBudget: 0,
+    weeksInPhase: 0,
+    totalWeeks: 0,
+    quality: 0,
+    testScreenScore: null,
+    released: false,
+    boxOffice: { total: 0, weeklyGross: [], weeksInTheaters: 0, peakPosition: 99 },
+    reviews: [],
+    overallRating: 0,
+  };
+}
+ 
+function calculateFilmQuality(film) {
+  if (!film.script || !film.director) return 0;
+  let q = 0;
+  // Script quality (0-8) contributes 0-40 points
+  q += (film.script.quality / 8) * 40;
+  // Director talent contributes 0-25 points
+  q += (film.director.talent / 100) * 25;
+  // Director vision contributes 0-10 points
+  q += (film.director.vision / 100) * 10;
+  // Cast average talent contributes 0-15 points
+  if (film.cast.length > 0) {
+    const avgTalent = film.cast.reduce((s, c) => s + c.talent, 0) / film.cast.length;
+    q += (avgTalent / 100) * 15;
+  }
+  // Budget adequacy bonus (0-10 points)
+  const idealBudget = film.script.baseCost * (1 + film.cast.length * 0.2);
+  const budgetRatio = film.budget / idealBudget;
+  q += clamp(budgetRatio, 0, 1.5) * 10 / 1.5;
+  // Random variance
+  q += randFloat(-5, 5);
+  return clamp(Math.round(q), 1, 100);
+}
+ 
+function calculateOpeningWeekend(film) {
+  const q = film.quality;
+  const genreData = GENRES.find(g => g.name === film.script.genre) || GENRES[0];
+  // Base from quality
+  let gross = (q / 100) * 60 * genreData.audienceSize;
+  // Cast star power
+  if (film.cast.length > 0) {
+    const starPower = film.cast.reduce((s, c) => s + c.popularity, 0) / film.cast.length;
+    gross *= (0.5 + starPower / 100);
+  }
+  // Marketing boost
+  gross *= (0.5 + (film.marketingBudget / 20));
+  // Reputation boost
+  gross *= (0.5 + game.reputation / 100);
+  // Random variance
+  gross *= randFloat(0.7, 1.3);
+  return Math.max(0.1, Math.round(gross * 10) / 10);
+}
+ 
+function calculateWeeklyDropoff(film, weekNum) {
+  const q = film.quality;
+  // Better films have slower dropoff
+  const retentionRate = 0.3 + (q / 100) * 0.35;
+  const prev = film.boxOffice.weeklyGross[weekNum - 1] || 0;
+  let gross = prev * retentionRate * randFloat(0.8, 1.2);
+  return Math.max(0, Math.round(gross * 10) / 10);
+}
+ 
+function generateAIFilm() {
+  const genre = pick(GENRES);
+  const script = generateScript(genre);
+  const quality = randInt(15, 95);
+  const title = script.title;
+  const studio = pick(['Universal','Paramount','Warner Bros.','20th Century Fox','Columbia','MGM','Lionsgate','New Line','Miramax','DreamWorks']);
+  const opening = (quality / 100) * 70 * genre.audienceSize * randFloat(0.6, 1.4);
+  return {
+    title: title,
+    studio: studio,
+    genre: genre.name,
+    quality: quality,
+    isAI: true,
+    boxOffice: { total: 0, weeklyGross: [Math.round(opening * 10) / 10], weeksInTheaters: 1, peakPosition: 99 },
+  };
+}
+ 
+// ---- GAME FLOW ----
+ 
+function startGame() {
+  const name = document.getElementById('company-name').value.trim() || 'Starlight Pictures';
+  game = createInitialState(name);
+  refreshTalentPool();
+  // Generate initial AI competition
+  for (let i = 0; i < 5; i++) {
+    game.aiFilms.push(generateAIFilm());
+  }
+  updateBoxOfficeChart();
+ 
+  document.getElementById('startup-screen').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+  updateStatsBar();
+  showScreen('office');
+  addNews('Welcome to Hollywood! You have $' + game.funds + 'M to start your studio.');
+  addNews('Head to Production to develop your first film.');
+  updateClock();
+  setInterval(updateClock, 60000);
+}
+ 
+function advanceWeek() {
+  if (game.gameOver) return;
+  game.week++;
+ 
+  // Process current film phases
+  if (game.currentFilm && game.currentFilm.phase === 'filming') {
+    game.currentFilm.weeksInPhase++;
+    if (game.currentFilm.weeksInPhase >= 4) {
+      game.currentFilm.phase = 'post-production';
+      game.currentFilm.weeksInPhase = 0;
+      addNews('"' + game.currentFilm.script.title + '" has wrapped filming! Moving to post-production.');
+    }
+  } else if (game.currentFilm && game.currentFilm.phase === 'post-production') {
+    game.currentFilm.weeksInPhase++;
+    if (game.currentFilm.weeksInPhase >= 3) {
+      game.currentFilm.phase = 'test-screening';
+      game.currentFilm.weeksInPhase = 0;
+      game.currentFilm.quality = calculateFilmQuality(game.currentFilm);
+      addNews('"' + game.currentFilm.script.title + '" is ready for test screening or release!');
+    }
+  }
+ 
+  // Process box office for released films
+  processBoxOffice();
+ 
+  // Random events
+  if (Math.random() < 0.1) randomEvent();
+ 
+  // Track weeks without film
+  if (!game.currentFilm) {
+    game.weeksWithoutFilm++;
+    if (game.weeksWithoutFilm > 12) {
+      game.reputation = Math.max(0, game.reputation - 1);
+    }
+  }
+ 
+  // Occasionally add AI competition
+  if (Math.random() < 0.15) {
+    game.aiFilms.push(generateAIFilm());
+  }
+ 
+  // Remove old AI films (>12 weeks)
+  game.aiFilms = game.aiFilms.filter(f => f.boxOffice.weeksInTheaters <= 12);
+ 
+  // Process AI film box office
+  game.aiFilms.forEach(f => {
+    const retentionRate = 0.3 + (f.quality / 100) * 0.35;
+    const prev = f.boxOffice.weeklyGross[f.boxOffice.weeksInTheaters - 1] || 0;
+    const weekGross = Math.max(0, Math.round(prev * retentionRate * randFloat(0.7, 1.3) * 10) / 10);
+    f.boxOffice.weeklyGross.push(weekGross);
+    f.boxOffice.total += weekGross;
+    f.boxOffice.weeksInTheaters++;
+  });
+ 
+  updateBoxOfficeChart();
+ 
+  // Refresh talent every 8 weeks
+  if (game.week % 8 === 0) {
+    refreshTalentPool();
+    addNews('New talent is available at the agency!');
+  }
+ 
+  // Check bankruptcy
+  if (game.funds < -10) {
+    game.gameOver = true;
+    showDialog('Game Over', 'Your studio has gone bankrupt! ' + game.companyName + ' made ' + game.completedFilms.length + ' films and earned a total gross of $' + game.totalGross.toFixed(1) + 'M over ' + game.week + ' weeks.', [{text:'OK', action:()=>location.reload()}]);
+    return;
+  }
+ 
+  updateStatsBar();
+  renderCurrentScreen();
+}
+ 
+function processBoxOffice() {
+  game.completedFilms.forEach(film => {
+    if (!film.released) return;
+    if (film.boxOffice.weeksInTheaters > 12) return; // out of theaters
+ 
+    const weekNum = film.boxOffice.weeksInTheaters;
+    let weekGross;
+    if (weekNum === 0) {
+      weekGross = calculateOpeningWeekend(film);
+      addNews('"' + film.script.title + '" opens with $' + weekGross.toFixed(1) + 'M!');
+    } else {
+      weekGross = calculateWeeklyDropoff(film, weekNum);
+    }
+    film.boxOffice.weeklyGross.push(weekGross);
+    film.boxOffice.total += weekGross;
+    film.boxOffice.weeksInTheaters++;
+    game.totalGross += weekGross;
+    game.funds += weekGross * 0.5; // studio gets ~50% of gross
+    game.funds = Math.round(game.funds * 10) / 10;
+  });
+}
+ 
+function updateBoxOfficeChart() {
+  // Combine player + AI films, sort by latest week gross
+  const allFilms = [
+    ...game.completedFilms.filter(f => f.released && f.boxOffice.weeksInTheaters <= 12),
+    ...game.aiFilms.filter(f => f.boxOffice.weeksInTheaters <= 12)
+  ];
+ 
+  allFilms.sort((a, b) => {
+    const aLast = a.boxOffice.weeklyGross[a.boxOffice.weeklyGross.length - 1] || 0;
+    const bLast = b.boxOffice.weeklyGross[b.boxOffice.weeklyGross.length - 1] || 0;
+    return bLast - aLast;
+  });
+ 
+  game.boxOfficeChart = allFilms.slice(0, 10);
+ 
+  // Update peak positions
+  game.boxOfficeChart.forEach((f, i) => {
+    if (i + 1 < f.boxOffice.peakPosition) {
+      f.boxOffice.peakPosition = i + 1;
+    }
+  });
+}
+ 
+function randomEvent() {
+  const events = [
+    { msg: 'A rival studio has a major flop! Audiences are looking for alternatives.', rep: 2, funds: 0 },
+    { msg: 'Hollywood trade magazines feature your studio.', rep: 3, funds: 0 },
+    { msg: 'An unexpected tax rebate comes through!', rep: 0, funds: 3 },
+    { msg: 'Equipment costs have risen this quarter.', rep: 0, funds: -2 },
+    { msg: 'A celebrity endorses your studio in an interview!', rep: 5, funds: 0 },
+    { msg: 'Industry downturn affects all studios.', rep: -2, funds: -1 },
+    { msg: 'Your studio wins a minor industry award!', rep: 4, funds: 0 },
+    { msg: 'Office renovation costs.', rep: 0, funds: -1.5 },
+  ];
+  const e = pick(events);
+  game.reputation = clamp(game.reputation + e.rep, 0, 100);
+  game.funds = Math.round((game.funds + e.funds) * 10) / 10;
+  addNews(e.msg);
+}
+ 
+// ---- UI RENDERING ----
+ 
+let currentScreen = 'office';
+ 
+function showScreen(name) {
+  currentScreen = name;
+  document.querySelectorAll('.mac-window').forEach(w => w.style.display = 'none');
+  const el = document.getElementById('screen-' + name);
+  if (el) el.style.display = '';
+  renderCurrentScreen();
+}
+ 
+function renderCurrentScreen() {
+  switch(currentScreen) {
+    case 'office': renderOffice(); break;
+    case 'production': renderProduction(); break;
+    case 'boxoffice': renderBoxOffice(); break;
+    case 'talent': renderTalent(); break;
+    case 'history': renderHistory(); break;
+  }
+}
+ 
+function updateStatsBar() {
+  document.getElementById('stat-company').textContent = game.companyName;
+  const fundsEl = document.getElementById('stat-funds');
+  fundsEl.textContent = '$' + game.funds.toFixed(1) + 'M';
+  fundsEl.className = 'stat-value ' + (game.funds < 0 ? 'negative' : game.funds > 100 ? 'positive' : '');
+  document.getElementById('stat-rep').textContent = game.reputation + '/100';
+  document.getElementById('stat-week').textContent = game.week;
+  document.getElementById('stat-films').textContent = game.completedFilms.length;
+}
+ 
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+ 
+function addNews(msg) {
+  game.newsLog.unshift({ week: game.week, msg: msg });
+  if (game.newsLog.length > 50) game.newsLog.pop();
+  showNotification(msg);
+}
+ 
+function showNotification(msg) {
+  const container = document.getElementById('notifications');
+  const el = document.createElement('div');
+  el.className = 'notification';
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+}
+ 
+function showDialog(title, body, buttons) {
+  const container = document.getElementById('dialog-container');
+  const btnsHtml = buttons.map((b, i) =>
+    `<button class="mac-btn ${i === buttons.length-1 ? 'primary' : ''}" onclick="dialogAction(${i})">${b.text}</button>`
+  ).join('');
+  container.innerHTML = `
+    <div class="dialog-overlay">
+      <div class="dialog-box">
+        <h3>${title}</h3>
+        <p>${body}</p>
+        <div class="dialog-buttons">${btnsHtml}</div>
+      </div>
+    </div>
+  `;
+  container._actions = buttons.map(b => b.action);
+}
+ 
+function dialogAction(idx) {
+  const container = document.getElementById('dialog-container');
+  const actions = container._actions;
+  container.innerHTML = '';
+  if (actions && actions[idx]) actions[idx]();
+}
+ 
+function starsHtml(rating, max) {
+  max = max || 5;
+  const full = Math.round(rating);
+  let s = '';
+  for (let i = 0; i < max; i++) s += i < full ? '★' : '☆';
+  return '<span class="stars">' + s + '</span>';
+}
+ 
+function formatMoney(m) { return '$' + m.toFixed(1) + 'M'; }
+ 
+// ===== OFFICE SCREEN =====
+function renderOffice() {
+  const c = document.getElementById('office-content');
+  document.getElementById('office-title').textContent = game.companyName + ' - Office';
+ 
+  let html = '';
+ 
+  // Current project status
+  html += '<div class="section-header">Current Project</div>';
+  if (game.currentFilm) {
+    const f = game.currentFilm;
+    html += `<div class="info-box">
+      <strong>"${f.script ? f.script.title : 'Untitled'}"</strong> - ${f.script ? f.script.genre : '?'}<br>
+      Phase: <strong>${f.phase.charAt(0).toUpperCase() + f.phase.slice(1)}</strong>
+      ${f.phase === 'filming' ? ' (Week ' + f.weeksInPhase + '/4)' : ''}
+      ${f.phase === 'post-production' ? ' (Week ' + f.weeksInPhase + '/3)' : ''}
+      ${f.director ? '<br>Director: ' + f.director.name : ''}
+      ${f.cast.length > 0 ? '<br>Cast: ' + f.cast.map(a=>a.name).join(', ') : ''}
+      ${f.budget > 0 ? '<br>Budget: ' + formatMoney(f.budget) : ''}
+    </div>`;
+    if (f.phase === 'filming' || f.phase === 'post-production') {
+      const progress = f.phase === 'filming' ? (f.weeksInPhase / 4) : (f.weeksInPhase / 3);
+      html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${progress*100}%"></div></div>`;
+      html += `<div style="text-align:center;margin-top:6px;">`;
+      html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+      html += `</div>`;
+    } else if (f.phase === 'test-screening') {
+      html += `<div style="margin-top:8px;">`;
+      html += `<button class="mac-btn" onclick="doTestScreening()">Test Screen Film</button> `;
+      html += `<button class="mac-btn primary" onclick="releaseFilm()">Release Film</button> `;
+      html += `<button class="mac-btn" onclick="showScreen('production')">Set Marketing Budget</button>`;
+      if (f.testScreenScore !== null) {
+        html += `<div class="info-box" style="margin-top:8px;">Test screening score: <strong>${f.testScreenScore}/100</strong> - ${
+          f.testScreenScore >= 80 ? 'Audience loved it!' :
+          f.testScreenScore >= 60 ? 'Audience liked it.' :
+          f.testScreenScore >= 40 ? 'Mixed reactions.' :
+          'Audience hated it.'
+        }</div>`;
+      }
+      html += `</div>`;
+    } else {
+      html += `<div style="margin-top:8px;"><button class="mac-btn primary" onclick="showScreen('production')">Go to Production</button></div>`;
+    }
+  } else {
+    html += `<div class="info-box">No film in production. Start a new project!</div>`;
+    html += `<button class="mac-btn primary" onclick="showScreen('production')">Start New Film</button>`;
+    html += ` <button class="mac-btn" onclick="advanceWeek()">Advance Week</button>`;
+  }
+ 
+  // Recent news
+  html += '<div class="section-header" style="margin-top:16px;">Hollywood Reporter</div>';
+  html += '<div class="mac-list" style="max-height:200px;overflow-y:auto;">';
+  game.newsLog.slice(0, 20).forEach(n => {
+    html += `<div class="mac-list-item"><strong>Week ${n.week}:</strong> ${n.msg}</div>`;
+  });
+  if (game.newsLog.length === 0) {
+    html += '<div class="mac-list-item" style="color:#999;">No news yet.</div>';
+  }
+  html += '</div>';
+ 
+  // Quick box office peek
+  if (game.boxOfficeChart.length > 0) {
+    html += '<div class="section-header" style="margin-top:16px;">Box Office Top 5</div>';
+    html += '<table class="top10-table"><tr><th>#</th><th>Film</th><th>This Week</th><th>Total</th></tr>';
+    game.boxOfficeChart.slice(0, 5).forEach((f, i) => {
+      const isPlayer = !f.isAI;
+      const lastWeek = f.boxOffice.weeklyGross[f.boxOffice.weeklyGross.length - 1] || 0;
+      html += `<tr class="${isPlayer ? 'mine' : ''}">
+        <td>${i+1}</td>
+        <td>${f.isAI ? f.title : '"' + f.script.title + '"'} ${isPlayer ? '⭐' : ''}</td>
+        <td>${formatMoney(lastWeek)}</td>
+        <td>${formatMoney(f.boxOffice.total)}</td>
+      </tr>`;
+    });
+    html += '</table>';
+  }
+ 
+  c.innerHTML = html;
+}
+ 
+// ===== PRODUCTION SCREEN =====
+function renderProduction() {
+  const c = document.getElementById('production-content');
+  let html = '';
+ 
+  if (!game.currentFilm) {
+    // Start new film
+    html += '<div class="section-header">Start New Production</div>';
+    html += '<div class="info-box">Choose a genre and review scripts to begin your next film.</div>';
+ 
+    html += '<div class="section-header">Select Genre</div>';
+    html += '<div class="grid-2col">';
+    GENRES.forEach(g => {
+      html += `<div class="cast-card" style="cursor:pointer;" onclick="selectGenre('${g.name}')">
+        <div class="name">${g.name}</div>
+        <div class="details">Base Cost: ~${formatMoney(g.baseCost)} | Appeal: ${g.baseAppeal}% | Audience: ${g.audienceSize > 1 ? 'Large' : g.audienceSize < 1 ? 'Niche' : 'Medium'}</div>
+      </div>`;
+    });
+    html += '</div>';
+  } else {
+    const f = game.currentFilm;
+    html += `<div class="film-strip">NOW IN ${f.phase.toUpperCase()} — "${f.script ? f.script.title : 'Untitled'}"</div>`;
+ 
+    if (f.phase === 'development') {
+      // Script & Genre chosen, now pick director + cast + budget
+      html += `<div class="info-box">
+        <strong>Script:</strong> "${f.script.title}" (${f.script.genre})<br>
+        <strong>Script Quality:</strong> ${f.script.qualityLabel} (${f.script.quality}/${SCRIPT_QUALITY.length - 1})<br>
+        <strong>Base Cost:</strong> ~${formatMoney(f.script.baseCost)}
+      </div>`;
+ 
+      // Director selection
+      html += '<div class="section-header">Hire Director</div>';
+      if (f.director) {
+        html += `<div class="cast-card" style="background:#e8ffe8;">
+          <div class="name">✓ ${f.director.name}</div>
+          <div class="details">Talent: ${f.director.talent} | Vision: ${f.director.vision} | <span class="salary">${formatMoney(f.director.salary)}</span></div>
+          <button class="mac-btn" onclick="fireDirector()" style="margin-top:4px;">Change Director</button>
+        </div>`;
+      } else {
+        html += '<div style="max-height:150px;overflow-y:auto;">';
+        game.availableDirectors.forEach(d => {
+          html += `<div class="cast-card" style="cursor:pointer;" onclick="hireDirector('${d.id}')">
+            <div class="name">${d.name}</div>
+            <div class="details">Talent: ${d.talent} | Vision: ${d.vision} | <span class="salary">${formatMoney(d.salary)}</span></div>
+          </div>`;
+        });
+        html += '</div>';
+      }
+ 
+      // Cast selection
+      html += `<div class="section-header">Cast Actors (${f.cast.length}/3)</div>`;
+      if (f.cast.length > 0) {
+        f.cast.forEach((a, i) => {
+          html += `<div class="cast-card" style="background:#e8ffe8;">
+            <div class="name">✓ ${a.name}</div>
+            <div class="details">Talent: ${a.talent} | Popularity: ${a.popularity} | <span class="salary">${formatMoney(a.salary)}</span></div>
+            <button class="mac-btn" onclick="fireCast(${i})" style="margin-top:4px;">Remove</button>
+          </div>`;
+        });
+      }
+      if (f.cast.length < 3) {
+        html += '<div style="max-height:200px;overflow-y:auto;">';
+        game.availableActors.filter(a => !f.cast.find(c => c.id === a.id)).forEach(a => {
+          html += `<div class="cast-card" style="cursor:pointer;" onclick="hireCast('${a.id}')">
+            <div class="name">${a.name}</div>
+            <div class="details">Talent: ${a.talent} | Popularity: ${a.popularity} | <span class="salary">${formatMoney(a.salary)}</span></div>
+          </div>`;
+        });
+        html += '</div>';
+      }
+ 
+      // Budget
+      const talentCost = (f.director ? f.director.salary : 0) + f.cast.reduce((s, c) => s + c.salary, 0);
+      const minBudget = Math.round((f.script.baseCost * 0.5 + talentCost) * 10) / 10;
+      const recBudget = Math.round((f.script.baseCost + talentCost) * 10) / 10;
+      html += '<div class="section-header">Set Budget</div>';
+      html += `<div class="form-row"><label>Talent Costs:</label> <span>${formatMoney(talentCost)}</span></div>`;
+      html += `<div class="form-row"><label>Production Base:</label> <span>~${formatMoney(f.script.baseCost)}</span></div>`;
+      html += `<div class="form-row"><label>Recommended:</label> <span>${formatMoney(recBudget)}</span></div>`;
+      html += `<div class="form-row"><label>Total Budget:</label>
+        <input type="range" id="budget-slider" min="${minBudget}" max="${Math.max(minBudget+1, recBudget * 2)}" step="0.5" value="${f.budget || recBudget}"
+          oninput="document.getElementById('budget-display').textContent='$'+this.value+'M'">
+        <span id="budget-display">${formatMoney(f.budget || recBudget)}</span>
+      </div>`;
+ 
+      // Marketing
+      html += '<div class="section-header">Marketing Budget</div>';
+      html += `<div class="form-row"><label>Marketing:</label>
+        <input type="range" id="marketing-slider" min="0" max="20" step="0.5" value="${f.marketingBudget || 5}"
+          oninput="document.getElementById('marketing-display').textContent='$'+this.value+'M'">
+        <span id="marketing-display">${formatMoney(f.marketingBudget || 5)}</span>
+      </div>`;
+ 
+      // Start filming button
+      html += `<div style="margin-top:16px;text-align:center;">`;
+      if (f.director && f.cast.length > 0) {
+        const totalCost = parseFloat(document.getElementById('budget-slider')?.value || f.budget || recBudget) +
+                         parseFloat(document.getElementById('marketing-slider')?.value || f.marketingBudget || 5);
+        html += `<button class="mac-btn primary" onclick="startFilming()">Start Filming (Est. ${formatMoney(totalCost)})</button>`;
+      } else {
+        html += `<button class="mac-btn" disabled>Hire director and at least 1 actor to begin</button>`;
+      }
+      html += ` <button class="mac-btn" onclick="cancelFilm()">Cancel Project</button>`;
+      html += `</div>`;
+ 
+    } else if (f.phase === 'filming') {
+      html += renderFilmingPhase(f);
+    } else if (f.phase === 'post-production') {
+      html += renderPostProductionPhase(f);
+    } else if (f.phase === 'test-screening') {
+      html += renderTestScreeningPhase(f);
+    }
+  }
+ 
+  c.innerHTML = html;
+}
+ 
+function renderFilmingPhase(f) {
+  let html = '<div class="info-box">';
+  html += `<strong>Director:</strong> ${f.director.name}<br>`;
+  html += `<strong>Cast:</strong> ${f.cast.map(a=>a.name).join(', ')}<br>`;
+  html += `<strong>Budget:</strong> ${formatMoney(f.budget)}<br>`;
+  html += `<strong>Week:</strong> ${f.weeksInPhase} / 4`;
+  html += '</div>';
+  html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${(f.weeksInPhase/4)*100}%"></div></div>`;
+  html += `<div style="text-align:center;margin-top:12px;">`;
+  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += `</div>`;
+  return html;
+}
+ 
+function renderPostProductionPhase(f) {
+  let html = '<div class="info-box">';
+  html += `Editing and post-production in progress...<br>`;
+  html += `<strong>Week:</strong> ${f.weeksInPhase} / 3`;
+  html += '</div>';
+  html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${(f.weeksInPhase/3)*100}%"></div></div>`;
+  html += `<div style="text-align:center;margin-top:12px;">`;
+  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += `</div>`;
+  return html;
+}
+ 
+function renderTestScreeningPhase(f) {
+  let html = `<div class="info-box">
+    <strong>Film Quality:</strong> ${f.quality}/100 ${starsHtml(Math.round(f.quality/20), 5)}<br>
+    <strong>Budget:</strong> ${formatMoney(f.budget)} | <strong>Marketing:</strong> ${formatMoney(f.marketingBudget)}
+  </div>`;
+ 
+  if (f.testScreenScore !== null) {
+    html += `<div class="info-box" style="background:#e8ffe8;">
+      <strong>Test Screening Results:</strong> ${f.testScreenScore}/100<br>
+      ${f.testScreenScore >= 80 ? 'The audience was thrilled! This could be a hit!' :
+        f.testScreenScore >= 60 ? 'Good reactions overall. Should do well.' :
+        f.testScreenScore >= 40 ? 'Mixed reactions. Consider your release strategy carefully.' :
+        'Poor audience reception. This might struggle at the box office.'}
+    </div>`;
+  }
+ 
+  // Marketing adjustment
+  html += '<div class="section-header">Adjust Marketing Budget</div>';
+  html += `<div class="form-row"><label>Marketing:</label>
+    <input type="range" id="marketing-slider-final" min="0" max="30" step="0.5" value="${f.marketingBudget}"
+      oninput="game.currentFilm.marketingBudget=parseFloat(this.value);document.getElementById('mkt-final-display').textContent='$'+this.value+'M'">
+    <span id="mkt-final-display">${formatMoney(f.marketingBudget)}</span>
+  </div>`;
+ 
+  html += `<div style="margin-top:16px;text-align:center;">`;
+  if (f.testScreenScore === null) {
+    html += `<button class="mac-btn" onclick="doTestScreening()">Test Screen ($1M)</button> `;
+  }
+  html += `<button class="mac-btn primary" onclick="releaseFilm()">Release to Theaters!</button>`;
+  html += `</div>`;
+  return html;
+}
+ 
+// ===== BOX OFFICE SCREEN =====
+function renderBoxOffice() {
+  const c = document.getElementById('boxoffice-content');
+  let html = '<div class="section-header">Box Office Top 10 — Week ' + game.week + '</div>';
+ 
+  if (game.boxOfficeChart.length === 0) {
+    html += '<div class="info-box">No films currently in theaters.</div>';
+  } else {
+    html += '<table class="top10-table">';
+    html += '<tr><th>#</th><th>Film</th><th>Studio</th><th>Genre</th><th>Wk</th><th>This Week</th><th>Total Gross</th></tr>';
+    game.boxOfficeChart.forEach((f, i) => {
+      const isPlayer = !f.isAI;
+      const lastWeek = f.boxOffice.weeklyGross[f.boxOffice.weeklyGross.length - 1] || 0;
+      const title = f.isAI ? f.title : f.script.title;
+      const studio = f.isAI ? f.studio : game.companyName;
+      const genre = f.isAI ? f.genre : f.script.genre;
+      html += `<tr class="${isPlayer ? 'mine' : ''}">
+        <td><strong>${i+1}</strong></td>
+        <td>${title}</td>
+        <td>${studio}</td>
+        <td>${genre}</td>
+        <td>${f.boxOffice.weeksInTheaters}</td>
+        <td>${formatMoney(lastWeek)}</td>
+        <td>${formatMoney(f.boxOffice.total)}</td>
+      </tr>`;
+    });
+    html += '</table>';
+  }
+ 
+  // Player's released films detail
+  const releasedFilms = game.completedFilms.filter(f => f.released);
+  if (releasedFilms.length > 0) {
+    html += '<div class="section-header" style="margin-top:16px;">Your Films in Theaters</div>';
+    releasedFilms.filter(f => f.boxOffice.weeksInTheaters <= 12).forEach(f => {
+      html += `<div class="report-card">
+        <h4>"${f.script.title}" (${f.script.genre}) — Week ${f.boxOffice.weeksInTheaters}</h4>
+        <div class="report-row"><span>Quality</span><span>${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}</span></div>
+        <div class="report-row"><span>Budget</span><span>${formatMoney(f.budget)}</span></div>
+        <div class="report-row"><span>Marketing</span><span>${formatMoney(f.marketingBudget)}</span></div>
+        <div class="report-row"><span>Total Gross</span><span>${formatMoney(f.boxOffice.total)}</span></div>
+        <div class="report-row"><span>Peak Chart Position</span><span>#${f.boxOffice.peakPosition}</span></div>
+        <div class="report-row"><span>Profit/Loss</span><span class="${f.boxOffice.total * 0.5 - f.budget - f.marketingBudget > 0 ? 'positive' : 'negative'}">${formatMoney(f.boxOffice.total * 0.5 - f.budget - f.marketingBudget)}</span></div>
+      </div>`;
+      // Mini chart
+      if (f.boxOffice.weeklyGross.length > 0) {
+        const maxG = Math.max(...f.boxOffice.weeklyGross);
+        html += '<div style="margin:4px 0;">';
+        f.boxOffice.weeklyGross.forEach((g, wi) => {
+          const w = maxG > 0 ? (g / maxG * 200) : 0;
+          html += `<div class="chart-bar"><span class="chart-bar-label">Wk ${wi+1}</span><div class="chart-bar-fill" style="width:${w}px;"></div><span class="chart-bar-value">${formatMoney(g)}</span></div>`;
+        });
+        html += '</div>';
+      }
+    });
+  }
+ 
+  html += `<div style="margin-top:12px;text-align:center;">`;
+  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += `</div>`;
+ 
+  c.innerHTML = html;
+}
+ 
+// ===== TALENT SCREEN =====
+function renderTalent() {
+  const c = document.getElementById('talent-content');
+  let html = '<div class="section-header">Available Directors</div>';
+  html += '<div class="grid-2col">';
+  game.availableDirectors.forEach(d => {
+    html += `<div class="cast-card">
+      <div class="name">${d.name}</div>
+      <div class="details">Talent: ${d.talent} | Vision: ${d.vision}<br><span class="salary">Salary: ${formatMoney(d.salary)}</span></div>
+    </div>`;
+  });
+  html += '</div>';
+ 
+  html += '<div class="section-header" style="margin-top:12px;">Available Actors</div>';
+  html += '<div class="grid-2col">';
+  game.availableActors.forEach(a => {
+    html += `<div class="cast-card">
+      <div class="name">${a.name}</div>
+      <div class="details">Talent: ${a.talent} | Popularity: ${a.popularity}<br><span class="salary">Salary: ${formatMoney(a.salary)}</span></div>
+    </div>`;
+  });
+  html += '</div>';
+ 
+  html += `<div style="margin-top:12px;"><em style="font-size:10px;color:#666;">Talent pool refreshes every 8 weeks.</em></div>`;
+  c.innerHTML = html;
+}
+ 
+// ===== HISTORY SCREEN =====
+function renderHistory() {
+  const c = document.getElementById('history-content');
+  let html = '<div class="section-header">Filmography — ' + game.companyName + '</div>';
+ 
+  if (game.completedFilms.length === 0) {
+    html += '<div class="info-box">No films completed yet. Get producing!</div>';
+  } else {
+    // Summary stats
+    const totalBudget = game.completedFilms.reduce((s, f) => s + f.budget + f.marketingBudget, 0);
+    const totalGross = game.completedFilms.reduce((s, f) => s + f.boxOffice.total, 0);
+    html += `<div class="info-box">
+      <strong>Total Films:</strong> ${game.completedFilms.length} |
+      <strong>Total Investment:</strong> ${formatMoney(totalBudget)} |
+      <strong>Total Gross:</strong> ${formatMoney(totalGross)} |
+      <strong>Net Return:</strong> <span class="${totalGross*0.5 - totalBudget > 0 ? 'positive' : 'negative'}">${formatMoney(totalGross * 0.5 - totalBudget)}</span>
+    </div>`;
+ 
+    game.completedFilms.slice().reverse().forEach(f => {
+      const profit = f.boxOffice.total * 0.5 - f.budget - f.marketingBudget;
+      html += `<div class="report-card">
+        <h4>"${f.script.title}" (${f.script.genre})</h4>
+        <div class="report-row"><span>Quality</span><span>${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}</span></div>
+        <div class="report-row"><span>Director</span><span>${f.director.name}</span></div>
+        <div class="report-row"><span>Cast</span><span>${f.cast.map(a=>a.name).join(', ')}</span></div>
+        <div class="report-row"><span>Budget</span><span>${formatMoney(f.budget)}</span></div>
+        <div class="report-row"><span>Marketing</span><span>${formatMoney(f.marketingBudget)}</span></div>
+        <div class="report-row"><span>Total Gross</span><span>${formatMoney(f.boxOffice.total)}</span></div>
+        <div class="report-row"><span>Peak Position</span><span>#${f.boxOffice.peakPosition}</span></div>
+        <div class="report-row"><span>Profit/Loss</span><span class="${profit > 0 ? 'positive' : 'negative'}">${formatMoney(profit)}</span></div>
+        ${f.reviews.length > 0 ? '<div style="margin-top:4px;font-size:10px;font-style:italic;color:#666;">"' + f.reviews[0] + '"</div>' : ''}
+      </div>`;
+    });
+  }
+ 
+  c.innerHTML = html;
+}
+ 
+// ===== GAME ACTIONS =====
+ 
+function selectGenre(genreName) {
+  const genre = GENRES.find(g => g.name === genreName);
+  if (!genre) return;
+ 
+  // Generate 3 scripts to choose from
+  const scripts = [generateScript(genre), generateScript(genre), generateScript(genre)];
+  scripts.sort((a, b) => b.quality - a.quality);
+ 
+  let scriptsHtml = scripts.map((s, i) =>
+    `<div class="cast-card" style="cursor:pointer;" onclick="pickScript(${i})">
+      <div class="name">"${s.title}"</div>
+      <div class="details">${s.genre} — Quality: ${s.qualityLabel} (${s.quality}/${SCRIPT_QUALITY.length-1})</div>
+    </div>`
+  ).join('');
+ 
+  showDialog('Choose a Script', `<div>Three ${genreName} scripts are available:</div><div style="margin-top:8px;">${scriptsHtml}</div>`, [
+    { text: 'Cancel', action: () => {} }
+  ]);
+ 
+  // Store scripts for selection
+  window._pendingScripts = scripts;
+}
+ 
+function pickScript(idx) {
+  const script = window._pendingScripts[idx];
+  if (!script) return;
+  document.getElementById('dialog-container').innerHTML = '';
+ 
+  game.currentFilm = createNewFilm();
+  game.currentFilm.script = script;
+  game.currentFilm.genre = script.genre;
+  game.currentFilm.budget = script.baseCost;
+  game.currentFilm.marketingBudget = 5;
+  game.weeksWithoutFilm = 0;
+ 
+  addNews('New project: "' + script.title + '" (' + script.genre + ') — ' + script.qualityLabel + ' script!');
+  showScreen('production');
+}
+ 
+function hireDirector(id) {
+  const d = game.availableDirectors.find(d => d.id === id);
+  if (!d || !game.currentFilm) return;
+  game.currentFilm.director = d;
+  renderProduction();
+}
+ 
+function fireDirector() {
+  if (!game.currentFilm) return;
+  game.currentFilm.director = null;
+  renderProduction();
+}
+ 
+function hireCast(id) {
+  const a = game.availableActors.find(a => a.id === id);
+  if (!a || !game.currentFilm || game.currentFilm.cast.length >= 3) return;
+  game.currentFilm.cast.push(a);
+  renderProduction();
+}
+ 
+function fireCast(idx) {
+  if (!game.currentFilm) return;
+  game.currentFilm.cast.splice(idx, 1);
+  renderProduction();
+}
+ 
+function startFilming() {
+  const f = game.currentFilm;
+  if (!f || !f.director || f.cast.length === 0) return;
+ 
+  const budgetSlider = document.getElementById('budget-slider');
+  const marketingSlider = document.getElementById('marketing-slider');
+  f.budget = parseFloat(budgetSlider ? budgetSlider.value : f.budget);
+  f.marketingBudget = parseFloat(marketingSlider ? marketingSlider.value : f.marketingBudget);
+ 
+  const totalCost = f.budget + f.marketingBudget;
+ 
+  if (totalCost > game.funds + 5) { // Allow small overdraft
+    showDialog('Insufficient Funds', `You need ${formatMoney(totalCost)} but only have ${formatMoney(game.funds)}. Reduce your budget or release a film to earn revenue.`, [{text:'OK', action:()=>{}}]);
+    return;
+  }
+ 
+  game.funds -= totalCost;
+  game.funds = Math.round(game.funds * 10) / 10;
+  game.totalSpent += totalCost;
+  f.phase = 'filming';
+  f.weeksInPhase = 0;
+ 
+  addNews('Cameras rolling on "' + f.script.title + '"! Budget: ' + formatMoney(totalCost));
+  updateStatsBar();
+  renderProduction();
+}
+ 
+function cancelFilm() {
+  showDialog('Cancel Project', 'Are you sure you want to cancel this project? No money has been spent yet.', [
+    { text: 'Keep Working', action: () => {} },
+    { text: 'Cancel Project', action: () => {
+      game.currentFilm = null;
+      showScreen('office');
+    }}
+  ]);
+}
+ 
+function doTestScreening() {
+  const f = game.currentFilm;
+  if (!f || f.phase !== 'test-screening') return;
+  if (f.testScreenScore !== null) {
+    showDialog('Already Screened', 'You already ran a test screening for this film.', [{text:'OK', action:()=>{}}]);
+    return;
+  }
+  game.funds -= 1; // $1M cost
+  // Test score = quality + noise
+  f.testScreenScore = clamp(f.quality + randInt(-15, 15), 1, 100);
+  addNews('Test screening for "' + f.script.title + '": Score ' + f.testScreenScore + '/100');
+  updateStatsBar();
+  renderCurrentScreen();
+}
+ 
+function releaseFilm() {
+  const f = game.currentFilm;
+  if (!f || f.phase !== 'test-screening') return;
+ 
+  // Generate reviews
+  f.overallRating = f.quality;
+  if (f.quality >= 70) {
+    f.reviews = [pick(REVIEW_QUOTES_GOOD), pick(REVIEW_QUOTES_GOOD)];
+  } else if (f.quality >= 40) {
+    f.reviews = [pick(REVIEW_QUOTES_MID), pick(REVIEW_QUOTES_MID)];
+  } else {
+    f.reviews = [pick(REVIEW_QUOTES_BAD), pick(REVIEW_QUOTES_BAD)];
+  }
+ 
+  f.released = true;
+  f.phase = 'released';
+  game.completedFilms.push(f);
+  game.currentFilm = null;
+ 
+  // Reputation change based on quality
+  const repChange = Math.round((f.quality - 50) / 10);
+  game.reputation = clamp(game.reputation + repChange, 0, 100);
+ 
+  addNews('"' + f.script.title + '" has been released! Critics say: "' + f.reviews[0] + '"');
+ 
+  // Show release summary dialog
+  showDialog('Film Released!', `
+    <strong>"${f.script.title}"</strong> (${f.script.genre})<br><br>
+    Quality: ${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}<br>
+    Director: ${f.director.name}<br>
+    Cast: ${f.cast.map(a=>a.name).join(', ')}<br><br>
+    Critics: <em>"${f.reviews[0]}"</em><br><br>
+    Reputation ${repChange >= 0 ? '+' : ''}${repChange}
+  `, [{text: 'Advance to Opening Weekend', action: () => {
+    advanceWeek();
+    showScreen('boxoffice');
+  }}]);
+}
+ 
+// Kick things off
+document.getElementById('company-name').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') startGame();
+});
+</script>
+ 
 </body>
 </html>
