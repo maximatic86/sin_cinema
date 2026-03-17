@@ -1462,11 +1462,11 @@ function pickScript(idx) {
     <div style="margin-top:8px;">
       <input type="text" id="film-title-input" class="mac-input" value="${script.title}"
         style="width:100%;padding:4px 6px;font-size:13px;font-family:Chicago,Geneva,sans-serif;border:2px inset #999;background:#fff;"
-        onkeydown="if(event.key==='Enter')confirmTitle()">
+        onkeydown="if(event.key==='Enter'){confirmTitle(this.value.trim())}">
     </div>
   `, [
     { text: 'Cancel', action: () => { window._pendingPickedScript = null; } },
-    { text: 'OK', action: () => confirmTitle() }
+    { text: 'OK', action: () => { const v = document.getElementById('film-title-input'); confirmTitle(v ? v.value.trim() : ''); } }
   ]);
   setTimeout(() => {
     const inp = document.getElementById('film-title-input');
@@ -1474,11 +1474,9 @@ function pickScript(idx) {
   }, 50);
 }
 
-function confirmTitle() {
+function confirmTitle(customTitle) {
   const script = window._pendingPickedScript;
   if (!script) return;
-  const inp = document.getElementById('film-title-input');
-  const customTitle = inp ? inp.value.trim() : '';
   if (customTitle) script.title = customTitle;
   window._pendingPickedScript = null;
   document.getElementById('dialog-container').innerHTML = '';
