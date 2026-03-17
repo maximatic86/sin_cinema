@@ -7,12 +7,12 @@
 <style>
 /* ===== CLASSIC MAC OS 9 STYLING ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
 @font-face {
   font-family: 'Chicago';
   src: local('Chicago');
 }
- 
+
 body {
   font-family: 'Chicago', 'Geneva', 'Lucida Grande', 'Charcoal', monospace;
   font-size: 12px;
@@ -22,14 +22,14 @@ body {
   overflow: hidden;
   height: 100vh;
 }
- 
+
 /* Mac OS 9 Desktop */
 #desktop {
   width: 100vw;
   height: 100vh;
   position: relative;
 }
- 
+
 /* Menu Bar */
 #menubar {
   height: 20px;
@@ -43,13 +43,13 @@ body {
   position: relative;
   z-index: 1000;
 }
- 
+
 #menubar .apple-menu { margin-right: 16px; font-size: 14px; }
 #menubar .menu-item { margin-right: 16px; cursor: default; padding: 0 4px; }
 #menubar .menu-item:hover { background: #0000cc; color: #fff; }
 #menubar .spacer { flex: 1; }
 #menubar .clock { font-weight: normal; font-size: 11px; }
- 
+
 /* Window */
 .mac-window {
   position: absolute;
@@ -59,7 +59,7 @@ body {
   box-shadow: 1px 1px 0 #000, 2px 2px 0 rgba(0,0,0,0.3);
   min-width: 300px;
 }
- 
+
 .window-titlebar {
   height: 20px;
   background: linear-gradient(to bottom, #eee 0%, #bbb 50%, #ccc 100%);
@@ -69,11 +69,11 @@ body {
   padding: 0 4px;
   cursor: default;
 }
- 
+
 .window-titlebar.inactive {
   background: linear-gradient(to bottom, #ddd 0%, #ccc 100%);
 }
- 
+
 .titlebar-btn {
   width: 12px; height: 12px;
   border: 1px solid #666;
@@ -82,24 +82,24 @@ body {
   background: #ddd;
   cursor: pointer;
 }
- 
+
 .titlebar-btn.close { background: #ff6b6b; border-color: #c0392b; }
 .titlebar-btn.minimize { background: #f9ca24; border-color: #f39c12; }
 .titlebar-btn.zoom { background: #6ab04c; border-color: #27ae60; }
- 
+
 .window-title {
   flex: 1;
   text-align: center;
   font-size: 11px;
   font-weight: bold;
 }
- 
+
 .window-content {
   padding: 8px;
   background: #fff;
   overflow-y: auto;
 }
- 
+
 /* Mac Buttons */
 .mac-btn {
   font-family: inherit;
@@ -120,7 +120,7 @@ body {
   font-weight: bold;
 }
 .mac-btn:disabled { opacity: 0.5; cursor: default; }
- 
+
 /* Mac List */
 .mac-list {
   border: 1px solid #999;
@@ -135,7 +135,7 @@ body {
 }
 .mac-list-item:hover { background: #e8e8e8; }
 .mac-list-item.selected { background: #0000cc; color: #fff; }
- 
+
 /* Mac Select / Dropdown */
 .mac-select {
   font-family: inherit;
@@ -144,7 +144,7 @@ body {
   border: 1px solid #999;
   background: #fff;
 }
- 
+
 /* Progress bar */
 .mac-progress {
   width: 100%;
@@ -164,7 +164,7 @@ body {
   );
   transition: width 0.3s;
 }
- 
+
 /* Tabs */
 .mac-tabs {
   display: flex;
@@ -187,7 +187,7 @@ body {
   border-bottom: 1px solid #fff;
   margin-bottom: -1px;
 }
- 
+
 /* Dialog overlay */
 .dialog-overlay {
   position: fixed;
@@ -198,7 +198,7 @@ body {
   justify-content: center;
   z-index: 2000;
 }
- 
+
 .dialog-box {
   background: #ddd;
   border: 2px solid #000;
@@ -207,24 +207,24 @@ body {
   max-width: 480px;
   box-shadow: 2px 2px 0 #000;
 }
- 
+
 .dialog-box h3 {
   font-size: 13px;
   margin-bottom: 8px;
 }
- 
+
 .dialog-box p {
   font-size: 11px;
   margin-bottom: 12px;
   line-height: 1.5;
 }
- 
+
 .dialog-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
- 
+
 /* Game specific layouts */
 .stats-bar {
   display: flex;
@@ -240,7 +240,7 @@ body {
 .stat-value { color: #333; }
 .stat-value.negative { color: #c0392b; }
 .stat-value.positive { color: #27ae60; }
- 
+
 .section-header {
   font-size: 12px;
   font-weight: bold;
@@ -248,19 +248,19 @@ body {
   border-bottom: 1px solid #ccc;
   margin: 8px 0 4px;
 }
- 
+
 .grid-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
- 
+
 .grid-3col {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
 }
- 
+
 .form-row {
   display: flex;
   align-items: center;
@@ -268,9 +268,9 @@ body {
   margin: 4px 0;
   font-size: 11px;
 }
- 
+
 .form-row label { min-width: 80px; font-weight: bold; }
- 
+
 .info-box {
   border: 1px solid #999;
   background: #ffffcc;
@@ -279,7 +279,7 @@ body {
   margin: 6px 0;
   line-height: 1.5;
 }
- 
+
 .chart-bar {
   display: flex;
   align-items: center;
@@ -294,22 +294,22 @@ body {
 }
 .chart-bar-label { min-width: 100px; text-align: right; }
 .chart-bar-value { min-width: 50px; }
- 
+
 /* Scrollbar styling */
 .window-content::-webkit-scrollbar { width: 14px; }
 .window-content::-webkit-scrollbar-track { background: #ccc; border: 1px solid #999; }
 .window-content::-webkit-scrollbar-thumb { background: #aaa; border: 1px solid #666; }
- 
+
 /* Star rating */
 .stars { color: #f39c12; letter-spacing: 1px; }
- 
+
 /* Top 10 table */
 .top10-table { width: 100%; border-collapse: collapse; font-size: 11px; }
 .top10-table th { text-align: left; border-bottom: 2px solid #000; padding: 2px 6px; font-size: 10px; }
 .top10-table td { padding: 2px 6px; border-bottom: 1px solid #ddd; }
 .top10-table tr.mine { background: #ffffcc; font-weight: bold; }
 .top10-table tr:hover { background: #e8e8e8; }
- 
+
 /* Notification area */
 #notifications {
   position: fixed;
@@ -330,7 +330,7 @@ body {
   max-width: 280px;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
- 
+
 /* Startup screen */
 #startup-screen {
   position: fixed;
@@ -357,7 +357,7 @@ body {
   color: #999;
   margin-bottom: 24px;
 }
- 
+
 .company-input {
   font-family: inherit;
   font-size: 14px;
@@ -367,9 +367,27 @@ body {
   text-align: center;
   margin-bottom: 16px;
 }
- 
+
 #game-area { display: none; }
- 
+
+/* Mode selection */
+.mode-btn.selected { border: 3px solid #0000cc; background: #cce; font-weight: bold; }
+
+/* Player turn banner */
+.turn-banner {
+  text-align: center;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-bottom: 1px solid #999;
+}
+.turn-banner.player-0 { background: #cce0ff; color: #003399; }
+.turn-banner.player-1 { background: #ffe0cc; color: #993300; }
+
+/* Hotseat: highlight whose films in box office */
+.top10-table tr.player-0-film { background: #e0eeff; font-weight: bold; }
+.top10-table tr.player-1-film { background: #fff0e0; font-weight: bold; }
+
 /* Report card */
 .report-card {
   border: 2px solid #000;
@@ -379,7 +397,7 @@ body {
 }
 .report-card h4 { margin-bottom: 6px; font-size: 12px; }
 .report-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 11px; border-bottom: 1px dotted #ccc; }
- 
+
 /* Cast card */
 .cast-card {
   border: 1px solid #999;
@@ -391,7 +409,7 @@ body {
 .cast-card .name { font-weight: bold; font-size: 12px; }
 .cast-card .details { color: #666; margin-top: 2px; }
 .cast-card .salary { color: #c0392b; font-weight: bold; }
- 
+
 /* Film strip decoration */
 .film-strip {
   background: #222;
@@ -402,7 +420,7 @@ body {
   text-align: center;
   border: 1px solid #000;
 }
- 
+
 /* Week counter animation */
 .week-display {
   font-size: 18px;
@@ -414,24 +432,39 @@ body {
 </style>
 </head>
 <body>
- 
+
 <!-- STARTUP SCREEN -->
 <div id="startup-screen">
   <h1>Sim Cinema Deluxe</h1>
   <h2>A Hollywood Production Simulation</h2>
   <div class="subtitle">Clone &bull; v1.0</div>
-  <div style="margin-bottom:16px; font-size:11px;">Name your production company:</div>
-  <input type="text" class="company-input" id="company-name" value="Starlight Pictures" placeholder="Company Name">
+
+  <div style="margin-bottom:16px; font-size:12px; font-weight:bold;">Game Mode:</div>
+  <div style="margin-bottom:16px; display:flex; gap:12px; justify-content:center;">
+    <button class="mac-btn primary mode-btn" id="mode-single" onclick="selectMode('single')">Single Player</button>
+    <button class="mac-btn mode-btn" id="mode-hotseat" onclick="selectMode('hotseat')">2 Player Hotseat</button>
+  </div>
+
+  <div id="player1-setup">
+    <div style="margin-bottom:6px; font-size:11px;">Name your production company:</div>
+    <input type="text" class="company-input" id="company-name" value="Starlight Pictures" placeholder="Company Name">
+  </div>
+
+  <div id="player2-setup" style="display:none;">
+    <div style="margin-bottom:6px; font-size:11px;">Player 2 — Name your production company:</div>
+    <input type="text" class="company-input" id="company-name-2" value="Moonbeam Studios" placeholder="Company Name">
+  </div>
+
   <br>
   <button class="mac-btn primary" onclick="startGame()">Start New Game</button>
   <div style="margin-top:24px; font-size:10px; color:#999;">
     Inspired by the 1999 Macintosh classic by Shannon Schroeder
   </div>
 </div>
- 
+
 <!-- GAME AREA -->
 <div id="game-area">
- 
+
 <!-- MENU BAR -->
 <div id="menubar">
   <span class="apple-menu">&#63743;</span>
@@ -443,7 +476,10 @@ body {
   <span class="spacer"></span>
   <span class="clock" id="clock"></span>
 </div>
- 
+
+<!-- TURN BANNER (hotseat only) -->
+<div id="turn-banner" class="turn-banner" style="display:none;"></div>
+
 <!-- STATS BAR -->
 <div class="stats-bar" id="stats-bar">
   <div class="stat-item"><span class="stat-label">Company:</span> <span class="stat-value" id="stat-company">-</span></div>
@@ -452,7 +488,7 @@ body {
   <div class="stat-item"><span class="stat-label">Week:</span> <span class="stat-value" id="stat-week">-</span></div>
   <div class="stat-item"><span class="stat-label">Films Made:</span> <span class="stat-value" id="stat-films">-</span></div>
 </div>
- 
+
 <!-- ===== OFFICE SCREEN ===== -->
 <div id="screen-office" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;">
   <div class="window-titlebar">
@@ -465,7 +501,7 @@ body {
     <!-- Populated by JS -->
   </div>
 </div>
- 
+
 <!-- ===== PRODUCTION SCREEN ===== -->
 <div id="screen-production" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
   <div class="window-titlebar">
@@ -477,7 +513,7 @@ body {
   <div class="window-content" id="production-content" style="height:calc(100vh - 120px);">
   </div>
 </div>
- 
+
 <!-- ===== BOX OFFICE SCREEN ===== -->
 <div id="screen-boxoffice" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
   <div class="window-titlebar">
@@ -489,7 +525,7 @@ body {
   <div class="window-content" id="boxoffice-content" style="height:calc(100vh - 120px);">
   </div>
 </div>
- 
+
 <!-- ===== TALENT SCREEN ===== -->
 <div id="screen-talent" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
   <div class="window-titlebar">
@@ -501,7 +537,7 @@ body {
   <div class="window-content" id="talent-content" style="height:calc(100vh - 120px);">
   </div>
 </div>
- 
+
 <!-- ===== HISTORY SCREEN ===== -->
 <div id="screen-history" class="mac-window" style="top:60px;left:20px;right:20px;bottom:20px;display:none;">
   <div class="window-titlebar">
@@ -513,20 +549,20 @@ body {
   <div class="window-content" id="history-content" style="height:calc(100vh - 120px);">
   </div>
 </div>
- 
+
 <!-- DIALOG CONTAINER -->
 <div id="dialog-container"></div>
- 
+
 <!-- NOTIFICATIONS -->
 <div id="notifications"></div>
- 
+
 </div><!-- /game-area -->
- 
+
 <script>
 // ===================================================================
 // SIM CINEMA DELUXE - GAME ENGINE
 // ===================================================================
- 
+
 // ---- DATA: Names, genres, scripts ----
 const FIRST_NAMES = [
   'James','Mary','Robert','Patricia','John','Jennifer','Michael','Linda',
@@ -550,7 +586,7 @@ const FIRST_NAMES = [
   'Natalie','Luna','Savannah','Brooklyn','Leah','Zoe','Stella','Hazel',
   'Ellie','Paisley','Audrey','Skylar','Violet','Claire','Bella','Aurora'
 ];
- 
+
 const LAST_NAMES = [
   'Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis',
   'Rodriguez','Martinez','Hernandez','Lopez','Gonzalez','Wilson','Anderson',
@@ -569,7 +605,7 @@ const LAST_NAMES = [
   'Hamilton','Graham','Wallace','Woods','West','Jordan','Owens','Reynolds',
   'Fisher','Ellis','Harrison','Gibson','McDonald','Marshall','Simmons','Burns'
 ];
- 
+
 const GENRES = [
   { name: 'Action',    baseCost: 25, baseAppeal: 60, audienceSize: 1.3 },
   { name: 'Comedy',    baseCost: 15, baseAppeal: 65, audienceSize: 1.2 },
@@ -580,47 +616,105 @@ const GENRES = [
   { name: 'Thriller',  baseCost: 18, baseAppeal: 58, audienceSize: 1.1 },
   { name: 'Animation', baseCost: 35, baseAppeal: 70, audienceSize: 1.4 },
 ];
- 
+
 const SCRIPT_QUALITY = ['Terrible','Poor','Below Average','Average','Above Average','Good','Great','Excellent','Masterpiece'];
- 
+
 const SCRIPT_TITLES_PREFIX = [
   'The Last','Dark','Eternal','Silent','Broken','Lost','Crimson','Secret',
   'Final','Midnight','Shadow','Golden','Deadly','Fallen','Rising','Iron',
   'Silver','Frozen','Burning','Hidden','Ancient','Savage','Wild','Twisted',
   'Shattered','Wicked','Brave','Lonely','Haunted','Cursed'
 ];
- 
+
 const SCRIPT_TITLES_SUFFIX = [
   'Dawn','Night','Heart','Storm','City','Road','Kingdom','Dream',
   'Hour','Horizon','Legacy','Destiny','Redemption','Justice','Paradise','Phantom',
   'Voyage','Code','Empire','Protocol','Conspiracy','Promise','Requiem','Eclipse',
   'Frontier','Inferno','Obsession','Reckoning','Stranger','Vendetta'
 ];
- 
+
 const REVIEW_QUOTES_GOOD = [
   'A triumph of cinema!','Absolutely riveting.','A must-see masterpiece.',
   'Brilliantly crafted.','The best film this year.','A stunning achievement.',
   'Captivating from start to finish.','A landmark film.','Extraordinary.',
   'Unforgettable performances.'
 ];
- 
+
 const REVIEW_QUOTES_MID = [
   'Entertaining enough.','Has its moments.','A decent effort.',
   'Passable entertainment.','Nothing special, but watchable.',
   'Some good scenes scattered throughout.','Worth a matinee.',
   'A mixed bag of moments.'
 ];
- 
+
 const REVIEW_QUOTES_BAD = [
   'A total disaster.','Avoid at all costs.','Painfully dull.',
   'An insult to audiences.','What were they thinking?','A colossal waste of time.',
   'Barely coherent.','A catastrophic misfire.','Unwatchable.',
   'The worst film in recent memory.'
 ];
- 
+
 // ---- GAME STATE ----
 let game = null;
- 
+let selectedMode = 'single';
+
+function selectMode(mode) {
+  selectedMode = mode;
+  document.getElementById('mode-single').className = 'mac-btn mode-btn' + (mode === 'single' ? ' primary selected' : '');
+  document.getElementById('mode-hotseat').className = 'mac-btn mode-btn' + (mode === 'hotseat' ? ' primary selected' : '');
+  document.getElementById('player2-setup').style.display = mode === 'hotseat' ? '' : 'none';
+}
+
+// Per-player state fields (swapped in/out when switching turns)
+const PLAYER_FIELDS = ['companyName','funds','reputation','currentFilm','completedFilms','totalGross','totalSpent','newsLog','weeksWithoutFilm'];
+
+function createPlayerState(companyName) {
+  return {
+    companyName: companyName,
+    funds: 50,
+    reputation: 30,
+    currentFilm: null,
+    completedFilms: [],
+    totalGross: 0,
+    totalSpent: 0,
+    newsLog: [],
+    weeksWithoutFilm: 0,
+  };
+}
+
+function saveCurrentPlayer() {
+  if (!game || game.mode === 'single') return;
+  const data = {};
+  PLAYER_FIELDS.forEach(f => data[f] = game[f]);
+  game.playerData[game.currentPlayerIndex] = data;
+}
+
+function loadPlayer(index) {
+  if (!game || game.mode === 'single') return;
+  const data = game.playerData[index];
+  if (!data) return;
+  PLAYER_FIELDS.forEach(f => game[f] = data[f]);
+  game.currentPlayerIndex = index;
+}
+
+function getPlayerCompanyName(index) {
+  if (!game) return '';
+  if (game.mode === 'single') return game.companyName;
+  if (index === game.currentPlayerIndex) return game.companyName;
+  return game.playerData[index] ? game.playerData[index].companyName : '';
+}
+
+function getAllPlayerFilms() {
+  if (!game) return [];
+  if (game.mode === 'single') return game.completedFilms;
+  const films = [];
+  for (let i = 0; i < game.totalPlayers; i++) {
+    const pFilms = (i === game.currentPlayerIndex) ? game.completedFilms : (game.playerData[i] ? game.playerData[i].completedFilms : []);
+    pFilms.forEach(f => { f._playerIndex = i; films.push(f); });
+  }
+  return films;
+}
+
 function createInitialState(companyName) {
   return {
     companyName: companyName,
@@ -639,19 +733,25 @@ function createInitialState(companyName) {
     newsLog: [],
     weeksWithoutFilm: 0,
     aiFilms: [], // competing films
+    // Multiplayer fields
+    mode: 'single',
+    totalPlayers: 1,
+    currentPlayerIndex: 0,
+    playerData: [],
+    turnPhase: 0,
   };
 }
- 
+
 // ---- TALENT GENERATION ----
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function randFloat(min, max) { return Math.random() * (max - min) + min; }
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
- 
+
 function generateName() {
   return pick(FIRST_NAMES) + ' ' + pick(LAST_NAMES);
 }
- 
+
 function generateActor() {
   const talent = randInt(20, 99);
   const popularity = randInt(10, 95);
@@ -665,7 +765,7 @@ function generateActor() {
     id: Math.random().toString(36).substr(2, 9),
   };
 }
- 
+
 function generateDirector() {
   const talent = randInt(25, 99);
   const vision = randInt(20, 99);
@@ -679,7 +779,7 @@ function generateDirector() {
     id: Math.random().toString(36).substr(2, 9),
   };
 }
- 
+
 function generateScript(genre) {
   const g = genre || pick(GENRES);
   const qualityIdx = Math.floor(Math.random() * Math.random() * SCRIPT_QUALITY.length * 1.5);
@@ -695,7 +795,7 @@ function generateScript(genre) {
     audienceSize: g.audienceSize,
   };
 }
- 
+
 function refreshTalentPool() {
   game.availableActors = [];
   game.availableDirectors = [];
@@ -705,10 +805,10 @@ function refreshTalentPool() {
   game.availableActors.sort((a, b) => b.popularity - a.popularity);
   game.availableDirectors.sort((a, b) => b.talent - a.talent);
 }
- 
+
 // ---- FILM PRODUCTION ----
 const PRODUCTION_PHASES = ['development','casting','filming','post-production','test-screening','release'];
- 
+
 function createNewFilm() {
   return {
     phase: 'development',
@@ -728,7 +828,7 @@ function createNewFilm() {
     overallRating: 0,
   };
 }
- 
+
 function calculateFilmQuality(film) {
   if (!film.script || !film.director) return 0;
   let q = 0;
@@ -751,7 +851,7 @@ function calculateFilmQuality(film) {
   q += randFloat(-5, 5);
   return clamp(Math.round(q), 1, 100);
 }
- 
+
 function calculateOpeningWeekend(film) {
   const q = film.quality;
   const genreData = GENRES.find(g => g.name === film.script.genre) || GENRES[0];
@@ -770,7 +870,7 @@ function calculateOpeningWeekend(film) {
   gross *= randFloat(0.7, 1.3);
   return Math.max(0.1, Math.round(gross * 10) / 10);
 }
- 
+
 function calculateWeeklyDropoff(film, weekNum) {
   const q = film.quality;
   // Better films have slower dropoff
@@ -779,7 +879,7 @@ function calculateWeeklyDropoff(film, weekNum) {
   let gross = prev * retentionRate * randFloat(0.8, 1.2);
   return Math.max(0, Math.round(gross * 10) / 10);
 }
- 
+
 function generateAIFilm() {
   const genre = pick(GENRES);
   const script = generateScript(genre);
@@ -796,33 +896,182 @@ function generateAIFilm() {
     boxOffice: { total: 0, weeklyGross: [Math.round(opening * 10) / 10], weeksInTheaters: 1, peakPosition: 99 },
   };
 }
- 
+
 // ---- GAME FLOW ----
- 
+
 function startGame() {
   const name = document.getElementById('company-name').value.trim() || 'Starlight Pictures';
   game = createInitialState(name);
+
+  if (selectedMode === 'hotseat') {
+    const name2 = document.getElementById('company-name-2').value.trim() || 'Moonbeam Studios';
+    game.mode = 'hotseat';
+    game.totalPlayers = 2;
+    game.currentPlayerIndex = 0;
+    game.turnPhase = 0;
+    game.playerData = [createPlayerState(name), createPlayerState(name2)];
+    loadPlayer(0);
+  }
+
   refreshTalentPool();
   // Generate initial AI competition
   for (let i = 0; i < 5; i++) {
     game.aiFilms.push(generateAIFilm());
   }
   updateBoxOfficeChart();
- 
+
   document.getElementById('startup-screen').style.display = 'none';
   document.getElementById('game-area').style.display = 'block';
+  updateTurnBanner();
   updateStatsBar();
   showScreen('office');
   addNews('Welcome to Hollywood! You have $' + game.funds + 'M to start your studio.');
   addNews('Head to Production to develop your first film.');
   updateClock();
   setInterval(updateClock, 60000);
+
+  if (game.mode === 'hotseat') {
+    showDialog('Player 1\'s Turn', game.companyName + ' — it\'s your turn! Manage your studio and click <strong>End Turn</strong> when ready.', [{text: 'OK', action: () => {}}]);
+  }
 }
- 
+
+function updateTurnBanner() {
+  const banner = document.getElementById('turn-banner');
+  if (!game || game.mode === 'single') {
+    banner.style.display = 'none';
+    return;
+  }
+  banner.style.display = '';
+  banner.className = 'turn-banner player-' + game.currentPlayerIndex;
+  banner.textContent = 'Player ' + (game.currentPlayerIndex + 1) + ': ' + game.companyName + '\'s Turn';
+}
+
+function endTurn() {
+  if (!game || game.gameOver) return;
+  if (game.mode === 'single') {
+    advanceWeek();
+    return;
+  }
+
+  saveCurrentPlayer();
+  game.turnPhase++;
+
+  if (game.turnPhase >= game.totalPlayers) {
+    // All players have taken their turn — advance the week
+    for (let i = 0; i < game.totalPlayers; i++) {
+      loadPlayer(i);
+      processBoxOffice();
+      if (!game.currentFilm) {
+        game.weeksWithoutFilm++;
+        if (game.weeksWithoutFilm > 12) {
+          game.reputation = Math.max(0, game.reputation - 1);
+        }
+      } else {
+        if (game.currentFilm.phase === 'filming') {
+          game.currentFilm.weeksInPhase++;
+          if (game.currentFilm.weeksInPhase >= 4) {
+            game.currentFilm.phase = 'post-production';
+            game.currentFilm.weeksInPhase = 0;
+            addNews('"' + game.currentFilm.script.title + '" has wrapped filming! Moving to post-production.');
+          }
+        } else if (game.currentFilm.phase === 'post-production') {
+          game.currentFilm.weeksInPhase++;
+          if (game.currentFilm.weeksInPhase >= 3) {
+            game.currentFilm.phase = 'test-screening';
+            game.currentFilm.weeksInPhase = 0;
+            game.currentFilm.quality = calculateFilmQuality(game.currentFilm);
+            addNews('"' + game.currentFilm.script.title + '" is ready for test screening or release!');
+          }
+        }
+      }
+      saveCurrentPlayer();
+    }
+
+    game.week++;
+
+    if (Math.random() < 0.1) {
+      const targetPlayer = randInt(0, game.totalPlayers - 1);
+      loadPlayer(targetPlayer);
+      randomEvent();
+      saveCurrentPlayer();
+    }
+
+    if (Math.random() < 0.15) {
+      game.aiFilms.push(generateAIFilm());
+    }
+    game.aiFilms = game.aiFilms.filter(f => f.boxOffice.weeksInTheaters <= 12);
+    game.aiFilms.forEach(f => {
+      const retentionRate = 0.3 + (f.quality / 100) * 0.35;
+      const prev = f.boxOffice.weeklyGross[f.boxOffice.weeksInTheaters - 1] || 0;
+      const weekGross = Math.max(0, Math.round(prev * retentionRate * randFloat(0.7, 1.3) * 10) / 10);
+      f.boxOffice.weeklyGross.push(weekGross);
+      f.boxOffice.total += weekGross;
+      f.boxOffice.weeksInTheaters++;
+    });
+
+    updateBoxOfficeChart();
+
+    if (game.week % 8 === 0) {
+      refreshTalentPool();
+    }
+
+    let allBankrupt = true;
+    for (let i = 0; i < game.totalPlayers; i++) {
+      if (game.playerData[i].funds >= -10) allBankrupt = false;
+    }
+    if (allBankrupt) {
+      game.gameOver = true;
+      showDialog('Game Over', 'All studios have gone bankrupt!', [{text:'OK', action:()=>location.reload()}]);
+      return;
+    }
+
+    if (game.week > 52) {
+      showHotseatResults();
+      return;
+    }
+
+    game.turnPhase = 0;
+    loadPlayer(0);
+  } else {
+    loadPlayer(game.turnPhase);
+  }
+
+  updateTurnBanner();
+  updateStatsBar();
+  renderCurrentScreen();
+
+  showDialog('Player ' + (game.currentPlayerIndex + 1) + '\'s Turn',
+    '<strong>' + game.companyName + '</strong> — it\'s your turn!<br>Funds: ' + formatMoney(game.funds) + ' | Reputation: ' + game.reputation + '/100',
+    [{text: 'OK', action: () => {}}]);
+}
+
+function showHotseatResults() {
+  game.gameOver = true;
+  let html = '<div style="text-align:center;margin-bottom:12px;"><strong>Final Standings — Week ' + game.week + '</strong></div>';
+  const results = [];
+  for (let i = 0; i < game.totalPlayers; i++) {
+    const pd = game.playerData[i];
+    const totalProfit = pd.totalGross * 0.5 - pd.totalSpent;
+    results.push({ index: i, name: pd.companyName, funds: pd.funds, rep: pd.reputation, films: pd.completedFilms.length, gross: pd.totalGross, profit: totalProfit });
+  }
+  results.forEach(r => r.score = Math.round(r.rep * 2 + r.profit / 10 + r.films * 5));
+  results.sort((a, b) => b.score - a.score);
+
+  results.forEach((r, i) => {
+    html += '<div style="margin:8px 0;padding:8px;border:2px solid ' + (i === 0 ? '#f39c12' : '#999') + ';background:' + (i === 0 ? '#fffde7' : '#f9f9f9') + ';">';
+    html += '<strong>' + (i === 0 ? 'Winner! ' : '') + 'Player ' + (r.index + 1) + ': ' + r.name + '</strong><br>';
+    html += 'Score: <strong>' + r.score + '</strong> | Films: ' + r.films + ' | Reputation: ' + r.rep + '/100<br>';
+    html += 'Total Gross: ' + formatMoney(r.gross) + ' | Funds: ' + formatMoney(r.funds);
+    html += '</div>';
+  });
+
+  showDialog('Game Over — Season Complete!', html, [{text: 'Play Again', action: () => location.reload()}]);
+}
+
 function advanceWeek() {
   if (game.gameOver) return;
   game.week++;
- 
+
   // Process current film phases
   if (game.currentFilm && game.currentFilm.phase === 'filming') {
     game.currentFilm.weeksInPhase++;
@@ -840,13 +1089,13 @@ function advanceWeek() {
       addNews('"' + game.currentFilm.script.title + '" is ready for test screening or release!');
     }
   }
- 
+
   // Process box office for released films
   processBoxOffice();
- 
+
   // Random events
   if (Math.random() < 0.1) randomEvent();
- 
+
   // Track weeks without film
   if (!game.currentFilm) {
     game.weeksWithoutFilm++;
@@ -854,15 +1103,15 @@ function advanceWeek() {
       game.reputation = Math.max(0, game.reputation - 1);
     }
   }
- 
+
   // Occasionally add AI competition
   if (Math.random() < 0.15) {
     game.aiFilms.push(generateAIFilm());
   }
- 
+
   // Remove old AI films (>12 weeks)
   game.aiFilms = game.aiFilms.filter(f => f.boxOffice.weeksInTheaters <= 12);
- 
+
   // Process AI film box office
   game.aiFilms.forEach(f => {
     const retentionRate = 0.3 + (f.quality / 100) * 0.35;
@@ -872,31 +1121,31 @@ function advanceWeek() {
     f.boxOffice.total += weekGross;
     f.boxOffice.weeksInTheaters++;
   });
- 
+
   updateBoxOfficeChart();
- 
+
   // Refresh talent every 8 weeks
   if (game.week % 8 === 0) {
     refreshTalentPool();
     addNews('New talent is available at the agency!');
   }
- 
+
   // Check bankruptcy
   if (game.funds < -10) {
     game.gameOver = true;
     showDialog('Game Over', 'Your studio has gone bankrupt! ' + game.companyName + ' made ' + game.completedFilms.length + ' films and earned a total gross of $' + game.totalGross.toFixed(1) + 'M over ' + game.week + ' weeks.', [{text:'OK', action:()=>location.reload()}]);
     return;
   }
- 
+
   updateStatsBar();
   renderCurrentScreen();
 }
- 
+
 function processBoxOffice() {
   game.completedFilms.forEach(film => {
     if (!film.released) return;
     if (film.boxOffice.weeksInTheaters > 12) return; // out of theaters
- 
+
     const weekNum = film.boxOffice.weeksInTheaters;
     let weekGross;
     if (weekNum === 0) {
@@ -913,22 +1162,23 @@ function processBoxOffice() {
     game.funds = Math.round(game.funds * 10) / 10;
   });
 }
- 
+
 function updateBoxOfficeChart() {
-  // Combine player + AI films, sort by latest week gross
+  // Combine all player films + AI films, sort by latest week gross
+  const playerFilms = getAllPlayerFilms().filter(f => f.released && f.boxOffice.weeksInTheaters <= 12);
   const allFilms = [
-    ...game.completedFilms.filter(f => f.released && f.boxOffice.weeksInTheaters <= 12),
+    ...playerFilms,
     ...game.aiFilms.filter(f => f.boxOffice.weeksInTheaters <= 12)
   ];
- 
+
   allFilms.sort((a, b) => {
     const aLast = a.boxOffice.weeklyGross[a.boxOffice.weeklyGross.length - 1] || 0;
     const bLast = b.boxOffice.weeklyGross[b.boxOffice.weeklyGross.length - 1] || 0;
     return bLast - aLast;
   });
- 
+
   game.boxOfficeChart = allFilms.slice(0, 10);
- 
+
   // Update peak positions
   game.boxOfficeChart.forEach((f, i) => {
     if (i + 1 < f.boxOffice.peakPosition) {
@@ -936,7 +1186,7 @@ function updateBoxOfficeChart() {
     }
   });
 }
- 
+
 function randomEvent() {
   const events = [
     { msg: 'A rival studio has a major flop! Audiences are looking for alternatives.', rep: 2, funds: 0 },
@@ -953,11 +1203,11 @@ function randomEvent() {
   game.funds = Math.round((game.funds + e.funds) * 10) / 10;
   addNews(e.msg);
 }
- 
+
 // ---- UI RENDERING ----
- 
+
 let currentScreen = 'office';
- 
+
 function showScreen(name) {
   currentScreen = name;
   document.querySelectorAll('.mac-window').forEach(w => w.style.display = 'none');
@@ -965,7 +1215,7 @@ function showScreen(name) {
   if (el) el.style.display = '';
   renderCurrentScreen();
 }
- 
+
 function renderCurrentScreen() {
   switch(currentScreen) {
     case 'office': renderOffice(); break;
@@ -975,9 +1225,10 @@ function renderCurrentScreen() {
     case 'history': renderHistory(); break;
   }
 }
- 
+
 function updateStatsBar() {
-  document.getElementById('stat-company').textContent = game.companyName;
+  const prefix = (game.mode === 'hotseat') ? 'P' + (game.currentPlayerIndex + 1) + ': ' : '';
+  document.getElementById('stat-company').textContent = prefix + game.companyName;
   const fundsEl = document.getElementById('stat-funds');
   fundsEl.textContent = '$' + game.funds.toFixed(1) + 'M';
   fundsEl.className = 'stat-value ' + (game.funds < 0 ? 'negative' : game.funds > 100 ? 'positive' : '');
@@ -985,18 +1236,18 @@ function updateStatsBar() {
   document.getElementById('stat-week').textContent = game.week;
   document.getElementById('stat-films').textContent = game.completedFilms.length;
 }
- 
+
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').textContent = now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 }
- 
+
 function addNews(msg) {
   game.newsLog.unshift({ week: game.week, msg: msg });
   if (game.newsLog.length > 50) game.newsLog.pop();
   showNotification(msg);
 }
- 
+
 function showNotification(msg) {
   const container = document.getElementById('notifications');
   const el = document.createElement('div');
@@ -1005,7 +1256,7 @@ function showNotification(msg) {
   container.appendChild(el);
   setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
 }
- 
+
 function showDialog(title, body, buttons) {
   const container = document.getElementById('dialog-container');
   const btnsHtml = buttons.map((b, i) =>
@@ -1022,14 +1273,14 @@ function showDialog(title, body, buttons) {
   `;
   container._actions = buttons.map(b => b.action);
 }
- 
+
 function dialogAction(idx) {
   const container = document.getElementById('dialog-container');
   const actions = container._actions;
   container.innerHTML = '';
   if (actions && actions[idx]) actions[idx]();
 }
- 
+
 function starsHtml(rating, max) {
   max = max || 5;
   const full = Math.round(rating);
@@ -1037,16 +1288,23 @@ function starsHtml(rating, max) {
   for (let i = 0; i < max; i++) s += i < full ? '★' : '☆';
   return '<span class="stars">' + s + '</span>';
 }
- 
+
 function formatMoney(m) { return '$' + m.toFixed(1) + 'M'; }
- 
+
+function advanceOrEndTurnBtn(primary) {
+  if (game && game.mode === 'hotseat') {
+    return `<button class="mac-btn ${primary ? 'primary' : ''}" onclick="endTurn()">End Turn</button>`;
+  }
+  return `<button class="mac-btn ${primary ? 'primary' : ''}" onclick="advanceWeek()">Advance Week</button>`;
+}
+
 // ===== OFFICE SCREEN =====
 function renderOffice() {
   const c = document.getElementById('office-content');
   document.getElementById('office-title').textContent = game.companyName + ' - Office';
- 
+
   let html = '';
- 
+
   // Current project status
   html += '<div class="section-header">Current Project</div>';
   if (game.currentFilm) {
@@ -1064,7 +1322,7 @@ function renderOffice() {
       const progress = f.phase === 'filming' ? (f.weeksInPhase / 4) : (f.weeksInPhase / 3);
       html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${progress*100}%"></div></div>`;
       html += `<div style="text-align:center;margin-top:6px;">`;
-      html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+      html += advanceOrEndTurnBtn(true);
       html += `</div>`;
     } else if (f.phase === 'test-screening') {
       html += `<div style="margin-top:8px;">`;
@@ -1086,9 +1344,9 @@ function renderOffice() {
   } else {
     html += `<div class="info-box">No film in production. Start a new project!</div>`;
     html += `<button class="mac-btn primary" onclick="showScreen('production')">Start New Film</button>`;
-    html += ` <button class="mac-btn" onclick="advanceWeek()">Advance Week</button>`;
+    html += ` ` + advanceOrEndTurnBtn(false);
   }
- 
+
   // Recent news
   html += '<div class="section-header" style="margin-top:16px;">Hollywood Reporter</div>';
   html += '<div class="mac-list" style="max-height:200px;overflow-y:auto;">';
@@ -1099,7 +1357,7 @@ function renderOffice() {
     html += '<div class="mac-list-item" style="color:#999;">No news yet.</div>';
   }
   html += '</div>';
- 
+
   // Quick box office peek
   if (game.boxOfficeChart.length > 0) {
     html += '<div class="section-header" style="margin-top:16px;">Box Office Top 5</div>';
@@ -1107,29 +1365,34 @@ function renderOffice() {
     game.boxOfficeChart.slice(0, 5).forEach((f, i) => {
       const isPlayer = !f.isAI;
       const lastWeek = f.boxOffice.weeklyGross[f.boxOffice.weeklyGross.length - 1] || 0;
-      html += `<tr class="${isPlayer ? 'mine' : ''}">
+      let rowClass = isPlayer ? 'mine' : '';
+      if (isPlayer && game.mode === 'hotseat' && f._playerIndex !== undefined) {
+        rowClass = 'player-' + f._playerIndex + '-film';
+      }
+      const studioTag = (isPlayer && game.mode === 'hotseat' && f._playerIndex !== undefined) ? ' [P' + (f._playerIndex+1) + ']' : '';
+      html += `<tr class="${rowClass}">
         <td>${i+1}</td>
-        <td>${f.isAI ? f.title : '"' + f.script.title + '"'} ${isPlayer ? '⭐' : ''}</td>
+        <td>${f.isAI ? f.title : '"' + f.script.title + '"'}${isPlayer ? ' ⭐' + studioTag : ''}</td>
         <td>${formatMoney(lastWeek)}</td>
         <td>${formatMoney(f.boxOffice.total)}</td>
       </tr>`;
     });
     html += '</table>';
   }
- 
+
   c.innerHTML = html;
 }
- 
+
 // ===== PRODUCTION SCREEN =====
 function renderProduction() {
   const c = document.getElementById('production-content');
   let html = '';
- 
+
   if (!game.currentFilm) {
     // Start new film
     html += '<div class="section-header">Start New Production</div>';
     html += '<div class="info-box">Choose a genre and review scripts to begin your next film.</div>';
- 
+
     html += '<div class="section-header">Select Genre</div>';
     html += '<div class="grid-2col">';
     GENRES.forEach(g => {
@@ -1142,7 +1405,7 @@ function renderProduction() {
   } else {
     const f = game.currentFilm;
     html += `<div class="film-strip">NOW IN ${f.phase.toUpperCase()} — "${f.script ? f.script.title : 'Untitled'}"</div>`;
- 
+
     if (f.phase === 'development') {
       // Script & Genre chosen, now pick director + cast + budget
       html += `<div class="info-box">
@@ -1150,7 +1413,7 @@ function renderProduction() {
         <strong>Script Quality:</strong> ${f.script.qualityLabel} (${f.script.quality}/${SCRIPT_QUALITY.length - 1})<br>
         <strong>Base Cost:</strong> ~${formatMoney(f.script.baseCost)}
       </div>`;
- 
+
       // Director selection
       html += '<div class="section-header">Hire Director</div>';
       if (f.director) {
@@ -1169,7 +1432,7 @@ function renderProduction() {
         });
         html += '</div>';
       }
- 
+
       // Cast selection
       html += `<div class="section-header">Cast Actors (${f.cast.length}/3)</div>`;
       if (f.cast.length > 0) {
@@ -1191,7 +1454,7 @@ function renderProduction() {
         });
         html += '</div>';
       }
- 
+
       // Budget
       const talentCost = (f.director ? f.director.salary : 0) + f.cast.reduce((s, c) => s + c.salary, 0);
       const minBudget = Math.round((f.script.baseCost * 0.5 + talentCost) * 10) / 10;
@@ -1205,7 +1468,7 @@ function renderProduction() {
           oninput="document.getElementById('budget-display').textContent='$'+this.value+'M'">
         <span id="budget-display">${formatMoney(f.budget || recBudget)}</span>
       </div>`;
- 
+
       // Marketing
       html += '<div class="section-header">Marketing Budget</div>';
       html += `<div class="form-row"><label>Marketing:</label>
@@ -1213,7 +1476,7 @@ function renderProduction() {
           oninput="document.getElementById('marketing-display').textContent='$'+this.value+'M'">
         <span id="marketing-display">${formatMoney(f.marketingBudget || 5)}</span>
       </div>`;
- 
+
       // Start filming button
       html += `<div style="margin-top:16px;text-align:center;">`;
       if (f.director && f.cast.length > 0) {
@@ -1225,7 +1488,7 @@ function renderProduction() {
       }
       html += ` <button class="mac-btn" onclick="cancelFilm()">Cancel Project</button>`;
       html += `</div>`;
- 
+
     } else if (f.phase === 'filming') {
       html += renderFilmingPhase(f);
     } else if (f.phase === 'post-production') {
@@ -1234,10 +1497,10 @@ function renderProduction() {
       html += renderTestScreeningPhase(f);
     }
   }
- 
+
   c.innerHTML = html;
 }
- 
+
 function renderFilmingPhase(f) {
   let html = '<div class="info-box">';
   html += `<strong>Director:</strong> ${f.director.name}<br>`;
@@ -1247,11 +1510,11 @@ function renderFilmingPhase(f) {
   html += '</div>';
   html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${(f.weeksInPhase/4)*100}%"></div></div>`;
   html += `<div style="text-align:center;margin-top:12px;">`;
-  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += advanceOrEndTurnBtn(true);
   html += `</div>`;
   return html;
 }
- 
+
 function renderPostProductionPhase(f) {
   let html = '<div class="info-box">';
   html += `Editing and post-production in progress...<br>`;
@@ -1259,17 +1522,17 @@ function renderPostProductionPhase(f) {
   html += '</div>';
   html += `<div class="mac-progress"><div class="mac-progress-fill" style="width:${(f.weeksInPhase/3)*100}%"></div></div>`;
   html += `<div style="text-align:center;margin-top:12px;">`;
-  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += advanceOrEndTurnBtn(true);
   html += `</div>`;
   return html;
 }
- 
+
 function renderTestScreeningPhase(f) {
   let html = `<div class="info-box">
     <strong>Film Quality:</strong> ${f.quality}/100 ${starsHtml(Math.round(f.quality/20), 5)}<br>
     <strong>Budget:</strong> ${formatMoney(f.budget)} | <strong>Marketing:</strong> ${formatMoney(f.marketingBudget)}
   </div>`;
- 
+
   if (f.testScreenScore !== null) {
     html += `<div class="info-box" style="background:#e8ffe8;">
       <strong>Test Screening Results:</strong> ${f.testScreenScore}/100<br>
@@ -1279,7 +1542,7 @@ function renderTestScreeningPhase(f) {
         'Poor audience reception. This might struggle at the box office.'}
     </div>`;
   }
- 
+
   // Marketing adjustment
   html += '<div class="section-header">Adjust Marketing Budget</div>';
   html += `<div class="form-row"><label>Marketing:</label>
@@ -1287,7 +1550,7 @@ function renderTestScreeningPhase(f) {
       oninput="game.currentFilm.marketingBudget=parseFloat(this.value);document.getElementById('mkt-final-display').textContent='$'+this.value+'M'">
     <span id="mkt-final-display">${formatMoney(f.marketingBudget)}</span>
   </div>`;
- 
+
   html += `<div style="margin-top:16px;text-align:center;">`;
   if (f.testScreenScore === null) {
     html += `<button class="mac-btn" onclick="doTestScreening()">Test Screen ($1M)</button> `;
@@ -1296,12 +1559,12 @@ function renderTestScreeningPhase(f) {
   html += `</div>`;
   return html;
 }
- 
+
 // ===== BOX OFFICE SCREEN =====
 function renderBoxOffice() {
   const c = document.getElementById('boxoffice-content');
   let html = '<div class="section-header">Box Office Top 10 — Week ' + game.week + '</div>';
- 
+
   if (game.boxOfficeChart.length === 0) {
     html += '<div class="info-box">No films currently in theaters.</div>';
   } else {
@@ -1311,9 +1574,15 @@ function renderBoxOffice() {
       const isPlayer = !f.isAI;
       const lastWeek = f.boxOffice.weeklyGross[f.boxOffice.weeklyGross.length - 1] || 0;
       const title = f.isAI ? f.title : f.script.title;
-      const studio = f.isAI ? f.studio : game.companyName;
+      const studio = f.isAI ? f.studio : (f._playerIndex !== undefined ? getPlayerCompanyName(f._playerIndex) : game.companyName);
       const genre = f.isAI ? f.genre : f.script.genre;
-      html += `<tr class="${isPlayer ? 'mine' : ''}">
+      let rowClass = '';
+      if (isPlayer && game.mode === 'hotseat') {
+        rowClass = 'player-' + (f._playerIndex !== undefined ? f._playerIndex : game.currentPlayerIndex) + '-film';
+      } else if (isPlayer) {
+        rowClass = 'mine';
+      }
+      html += `<tr class="${rowClass}">
         <td><strong>${i+1}</strong></td>
         <td>${title}</td>
         <td>${studio}</td>
@@ -1325,7 +1594,7 @@ function renderBoxOffice() {
     });
     html += '</table>';
   }
- 
+
   // Player's released films detail
   const releasedFilms = game.completedFilms.filter(f => f.released);
   if (releasedFilms.length > 0) {
@@ -1352,14 +1621,14 @@ function renderBoxOffice() {
       }
     });
   }
- 
+
   html += `<div style="margin-top:12px;text-align:center;">`;
-  html += `<button class="mac-btn primary" onclick="advanceWeek()">Advance Week</button>`;
+  html += advanceOrEndTurnBtn(true);
   html += `</div>`;
- 
+
   c.innerHTML = html;
 }
- 
+
 // ===== TALENT SCREEN =====
 function renderTalent() {
   const c = document.getElementById('talent-content');
@@ -1372,7 +1641,7 @@ function renderTalent() {
     </div>`;
   });
   html += '</div>';
- 
+
   html += '<div class="section-header" style="margin-top:12px;">Available Actors</div>';
   html += '<div class="grid-2col">';
   game.availableActors.forEach(a => {
@@ -1382,16 +1651,16 @@ function renderTalent() {
     </div>`;
   });
   html += '</div>';
- 
+
   html += `<div style="margin-top:12px;"><em style="font-size:10px;color:#666;">Talent pool refreshes every 8 weeks.</em></div>`;
   c.innerHTML = html;
 }
- 
+
 // ===== HISTORY SCREEN =====
 function renderHistory() {
   const c = document.getElementById('history-content');
   let html = '<div class="section-header">Filmography — ' + game.companyName + '</div>';
- 
+
   if (game.completedFilms.length === 0) {
     html += '<div class="info-box">No films completed yet. Get producing!</div>';
   } else {
@@ -1404,7 +1673,7 @@ function renderHistory() {
       <strong>Total Gross:</strong> ${formatMoney(totalGross)} |
       <strong>Net Return:</strong> <span class="${totalGross*0.5 - totalBudget > 0 ? 'positive' : 'negative'}">${formatMoney(totalGross * 0.5 - totalBudget)}</span>
     </div>`;
- 
+
     game.completedFilms.slice().reverse().forEach(f => {
       const profit = f.boxOffice.total * 0.5 - f.budget - f.marketingBudget;
       html += `<div class="report-card">
@@ -1421,35 +1690,35 @@ function renderHistory() {
       </div>`;
     });
   }
- 
+
   c.innerHTML = html;
 }
- 
+
 // ===== GAME ACTIONS =====
- 
+
 function selectGenre(genreName) {
   const genre = GENRES.find(g => g.name === genreName);
   if (!genre) return;
- 
+
   // Generate 3 scripts to choose from
   const scripts = [generateScript(genre), generateScript(genre), generateScript(genre)];
   scripts.sort((a, b) => b.quality - a.quality);
- 
+
   let scriptsHtml = scripts.map((s, i) =>
     `<div class="cast-card" style="cursor:pointer;" onclick="pickScript(${i})">
       <div class="name">"${s.title}"</div>
       <div class="details">${s.genre} — Quality: ${s.qualityLabel} (${s.quality}/${SCRIPT_QUALITY.length-1})</div>
     </div>`
   ).join('');
- 
+
   showDialog('Choose a Script', `<div>Three ${genreName} scripts are available:</div><div style="margin-top:8px;">${scriptsHtml}</div>`, [
     { text: 'Cancel', action: () => {} }
   ]);
- 
+
   // Store scripts for selection
   window._pendingScripts = scripts;
 }
- 
+
 function pickScript(idx) {
   const script = window._pendingScripts[idx];
   if (!script) return;
@@ -1491,60 +1760,60 @@ function confirmTitle(customTitle) {
   addNews('New project: "' + script.title + '" (' + script.genre + ') — ' + script.qualityLabel + ' script!');
   showScreen('production');
 }
- 
+
 function hireDirector(id) {
   const d = game.availableDirectors.find(d => d.id === id);
   if (!d || !game.currentFilm) return;
   game.currentFilm.director = d;
   renderProduction();
 }
- 
+
 function fireDirector() {
   if (!game.currentFilm) return;
   game.currentFilm.director = null;
   renderProduction();
 }
- 
+
 function hireCast(id) {
   const a = game.availableActors.find(a => a.id === id);
   if (!a || !game.currentFilm || game.currentFilm.cast.length >= 3) return;
   game.currentFilm.cast.push(a);
   renderProduction();
 }
- 
+
 function fireCast(idx) {
   if (!game.currentFilm) return;
   game.currentFilm.cast.splice(idx, 1);
   renderProduction();
 }
- 
+
 function startFilming() {
   const f = game.currentFilm;
   if (!f || !f.director || f.cast.length === 0) return;
- 
+
   const budgetSlider = document.getElementById('budget-slider');
   const marketingSlider = document.getElementById('marketing-slider');
   f.budget = parseFloat(budgetSlider ? budgetSlider.value : f.budget);
   f.marketingBudget = parseFloat(marketingSlider ? marketingSlider.value : f.marketingBudget);
- 
+
   const totalCost = f.budget + f.marketingBudget;
- 
+
   if (totalCost > game.funds + 5) { // Allow small overdraft
     showDialog('Insufficient Funds', `You need ${formatMoney(totalCost)} but only have ${formatMoney(game.funds)}. Reduce your budget or release a film to earn revenue.`, [{text:'OK', action:()=>{}}]);
     return;
   }
- 
+
   game.funds -= totalCost;
   game.funds = Math.round(game.funds * 10) / 10;
   game.totalSpent += totalCost;
   f.phase = 'filming';
   f.weeksInPhase = 0;
- 
+
   addNews('Cameras rolling on "' + f.script.title + '"! Budget: ' + formatMoney(totalCost));
   updateStatsBar();
   renderProduction();
 }
- 
+
 function cancelFilm() {
   showDialog('Cancel Project', 'Are you sure you want to cancel this project? No money has been spent yet.', [
     { text: 'Keep Working', action: () => {} },
@@ -1554,7 +1823,7 @@ function cancelFilm() {
     }}
   ]);
 }
- 
+
 function doTestScreening() {
   const f = game.currentFilm;
   if (!f || f.phase !== 'test-screening') return;
@@ -1569,11 +1838,11 @@ function doTestScreening() {
   updateStatsBar();
   renderCurrentScreen();
 }
- 
+
 function releaseFilm() {
   const f = game.currentFilm;
   if (!f || f.phase !== 'test-screening') return;
- 
+
   // Generate reviews
   f.overallRating = f.quality;
   if (f.quality >= 70) {
@@ -1583,18 +1852,19 @@ function releaseFilm() {
   } else {
     f.reviews = [pick(REVIEW_QUOTES_BAD), pick(REVIEW_QUOTES_BAD)];
   }
- 
+
   f.released = true;
   f.phase = 'released';
+  if (game.mode === 'hotseat') f._playerIndex = game.currentPlayerIndex;
   game.completedFilms.push(f);
   game.currentFilm = null;
- 
+
   // Reputation change based on quality
   const repChange = Math.round((f.quality - 50) / 10);
   game.reputation = clamp(game.reputation + repChange, 0, 100);
- 
+
   addNews('"' + f.script.title + '" has been released! Critics say: "' + f.reviews[0] + '"');
- 
+
   // Show release summary dialog
   showDialog('Film Released!', `
     <strong>"${f.script.title}"</strong> (${f.script.genre})<br><br>
@@ -1603,17 +1873,19 @@ function releaseFilm() {
     Cast: ${f.cast.map(a=>a.name).join(', ')}<br><br>
     Critics: <em>"${f.reviews[0]}"</em><br><br>
     Reputation ${repChange >= 0 ? '+' : ''}${repChange}
-  `, [{text: 'Advance to Opening Weekend', action: () => {
-    advanceWeek();
-    showScreen('boxoffice');
+  `, [{text: game.mode === 'hotseat' ? 'End Turn' : 'Advance to Opening Weekend', action: () => {
+    if (game.mode === 'hotseat') { endTurn(); } else { advanceWeek(); showScreen('boxoffice'); }
   }}]);
 }
- 
+
 // Kick things off
 document.getElementById('company-name').addEventListener('keypress', function(e) {
   if (e.key === 'Enter') startGame();
 });
+document.getElementById('company-name-2').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') startGame();
+});
 </script>
- 
+
 </body>
 </html>
