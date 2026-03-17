@@ -1454,14 +1454,42 @@ function pickScript(idx) {
   const script = window._pendingScripts[idx];
   if (!script) return;
   document.getElementById('dialog-container').innerHTML = '';
- 
+
+  // Prompt the player to name the film
+  window._pendingPickedScript = script;
+  showDialog('Name Your Film', `
+    <div>The script is called "<strong>${script.title}</strong>".<br>Enter a title for your film, or keep the original:</div>
+    <div style="margin-top:8px;">
+      <input type="text" id="film-title-input" class="mac-input" value="${script.title}"
+        style="width:100%;padding:4px 6px;font-size:13px;font-family:Chicago,Geneva,sans-serif;border:2px inset #999;background:#fff;"
+        onkeydown="if(event.key==='Enter')confirmTitle()">
+    </div>
+  `, [
+    { text: 'Cancel', action: () => { window._pendingPickedScript = null; } },
+    { text: 'OK', action: () => confirmTitle() }
+  ]);
+  setTimeout(() => {
+    const inp = document.getElementById('film-title-input');
+    if (inp) { inp.focus(); inp.select(); }
+  }, 50);
+}
+
+function confirmTitle() {
+  const script = window._pendingPickedScript;
+  if (!script) return;
+  const inp = document.getElementById('film-title-input');
+  const customTitle = inp ? inp.value.trim() : '';
+  if (customTitle) script.title = customTitle;
+  window._pendingPickedScript = null;
+  document.getElementById('dialog-container').innerHTML = '';
+
   game.currentFilm = createNewFilm();
   game.currentFilm.script = script;
   game.currentFilm.genre = script.genre;
   game.currentFilm.budget = script.baseCost;
   game.currentFilm.marketingBudget = 5;
   game.weeksWithoutFilm = 0;
- 
+
   addNews('New project: "' + script.title + '" (' + script.genre + ') — ' + script.qualityLabel + ' script!');
   showScreen('production');
 }
