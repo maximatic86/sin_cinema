@@ -813,6 +813,7 @@ function createNewFilm() {
   return {
     phase: 'development',
     script: null,
+    movieTitle: '', // player-chosen title (may differ from script title)
     genre: null,
     director: null,
     cast: [], // up to 3 actors
@@ -827,6 +828,10 @@ function createNewFilm() {
     reviews: [],
     overallRating: 0,
   };
+}
+
+function filmTitle(f) {
+  return f.movieTitle || (f.script ? f.script.title : 'Untitled');
 }
 
 function calculateFilmQuality(film) {
@@ -972,7 +977,7 @@ function endTurn() {
           if (game.currentFilm.weeksInPhase >= 4) {
             game.currentFilm.phase = 'post-production';
             game.currentFilm.weeksInPhase = 0;
-            addNews('"' + game.currentFilm.script.title + '" has wrapped filming! Moving to post-production.');
+            addNews('"' + filmTitle(game.currentFilm) + '" has wrapped filming! Moving to post-production.');
           }
         } else if (game.currentFilm.phase === 'post-production') {
           game.currentFilm.weeksInPhase++;
@@ -980,7 +985,7 @@ function endTurn() {
             game.currentFilm.phase = 'test-screening';
             game.currentFilm.weeksInPhase = 0;
             game.currentFilm.quality = calculateFilmQuality(game.currentFilm);
-            addNews('"' + game.currentFilm.script.title + '" is ready for test screening or release!');
+            addNews('"' + filmTitle(game.currentFilm) + '" is ready for test screening or release!');
           }
         }
       }
@@ -1080,7 +1085,7 @@ function advanceWeek() {
     if (game.currentFilm.weeksInPhase >= 4) {
       game.currentFilm.phase = 'post-production';
       game.currentFilm.weeksInPhase = 0;
-      addNews('"' + game.currentFilm.script.title + '" has wrapped filming! Moving to post-production.');
+      addNews('"' + filmTitle(game.currentFilm) + '" has wrapped filming! Moving to post-production.');
     }
   } else if (game.currentFilm && game.currentFilm.phase === 'post-production') {
     game.currentFilm.weeksInPhase++;
@@ -1088,7 +1093,7 @@ function advanceWeek() {
       game.currentFilm.phase = 'test-screening';
       game.currentFilm.weeksInPhase = 0;
       game.currentFilm.quality = calculateFilmQuality(game.currentFilm);
-      addNews('"' + game.currentFilm.script.title + '" is ready for test screening or release!');
+      addNews('"' + filmTitle(game.currentFilm) + '" is ready for test screening or release!');
     }
   }
 
@@ -1152,7 +1157,7 @@ function processBoxOffice() {
     let weekGross;
     if (weekNum === 0) {
       weekGross = calculateOpeningWeekend(film);
-      addNews('"' + film.script.title + '" opens with $' + weekGross.toFixed(1) + 'M!');
+      addNews('"' + filmTitle(film) + '" opens with $' + weekGross.toFixed(1) + 'M!');
     } else {
       weekGross = calculateWeeklyDropoff(film, weekNum);
     }
@@ -1312,7 +1317,7 @@ function renderOffice() {
   if (game.currentFilm) {
     const f = game.currentFilm;
     html += `<div class="info-box">
-      <strong>"${f.script ? f.script.title : 'Untitled'}"</strong> - ${f.script ? f.script.genre : '?'}<br>
+      <strong>"${filmTitle(f)}"</strong> - ${f.script ? f.script.genre : '?'}${f.script && f.movieTitle !== f.script.title ? '<br>Script: "' + f.script.title + '"' : ''}<br>
       Phase: <strong>${f.phase.charAt(0).toUpperCase() + f.phase.slice(1)}</strong>
       ${f.phase === 'filming' ? ' (Week ' + f.weeksInPhase + '/4)' : ''}
       ${f.phase === 'post-production' ? ' (Week ' + f.weeksInPhase + '/3)' : ''}
@@ -1374,7 +1379,7 @@ function renderOffice() {
       const studioTag = (isPlayer && game.mode === 'hotseat' && f._playerIndex !== undefined) ? ' [P' + (f._playerIndex+1) + ']' : '';
       html += `<tr class="${rowClass}">
         <td>${i+1}</td>
-        <td>${f.isAI ? f.title : '"' + f.script.title + '"'}${isPlayer ? ' ⭐' + studioTag : ''}</td>
+        <td>${f.isAI ? f.title : '"' + filmTitle(f) + '"'}${isPlayer ? ' ⭐' + studioTag : ''}</td>
         <td>${formatMoney(lastWeek)}</td>
         <td>${formatMoney(f.boxOffice.total)}</td>
       </tr>`;
@@ -1412,11 +1417,12 @@ function renderProduction() {
     html += '</div>';
   } else {
     const f = game.currentFilm;
-    html += `<div class="film-strip">NOW IN ${f.phase.toUpperCase()} — "${f.script ? f.script.title : 'Untitled'}"</div>`;
+    html += `<div class="film-strip">NOW IN ${f.phase.toUpperCase()} — "${filmTitle(f)}"</div>`;
 
     if (f.phase === 'development') {
       // Script & Genre chosen, now pick director + cast + budget
       html += `<div class="info-box">
+        <strong>Movie Title:</strong> "${filmTitle(f)}"<br>
         <strong>Script:</strong> "${f.script.title}" (${f.script.genre})<br>
         <strong>Script Quality:</strong> ${f.script.qualityLabel} (${f.script.quality}/${SCRIPT_QUALITY.length - 1})<br>
         <strong>Base Cost:</strong> ~${formatMoney(f.script.baseCost)}
@@ -1581,7 +1587,7 @@ function renderBoxOffice() {
     game.boxOfficeChart.forEach((f, i) => {
       const isPlayer = !f.isAI;
       const lastWeek = f.boxOffice.weeklyGross[f.boxOffice.weeklyGross.length - 1] || 0;
-      const title = f.isAI ? f.title : f.script.title;
+      const title = f.isAI ? f.title : filmTitle(f);
       const studio = f.isAI ? f.studio : (f._playerIndex !== undefined ? getPlayerCompanyName(f._playerIndex) : game.companyName);
       const genre = f.isAI ? f.genre : f.script.genre;
       let rowClass = '';
@@ -1609,7 +1615,7 @@ function renderBoxOffice() {
     html += '<div class="section-header" style="margin-top:16px;">Your Films in Theaters</div>';
     releasedFilms.filter(f => f.boxOffice.weeksInTheaters <= 12).forEach(f => {
       html += `<div class="report-card">
-        <h4>"${f.script.title}" (${f.script.genre}) — Week ${f.boxOffice.weeksInTheaters}</h4>
+        <h4>"${filmTitle(f)}" (${f.script.genre}) — Week ${f.boxOffice.weeksInTheaters}</h4>
         <div class="report-row"><span>Quality</span><span>${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}</span></div>
         <div class="report-row"><span>Budget</span><span>${formatMoney(f.budget)}</span></div>
         <div class="report-row"><span>Marketing</span><span>${formatMoney(f.marketingBudget)}</span></div>
@@ -1685,7 +1691,7 @@ function renderHistory() {
     game.completedFilms.slice().reverse().forEach(f => {
       const profit = f.boxOffice.total * 0.5 - f.budget - f.marketingBudget;
       html += `<div class="report-card">
-        <h4>"${f.script.title}" (${f.script.genre})</h4>
+        <h4>"${filmTitle(f)}" (${f.script.genre})</h4>
         <div class="report-row"><span>Quality</span><span>${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}</span></div>
         <div class="report-row"><span>Director</span><span>${f.director.name}</span></div>
         <div class="report-row"><span>Cast</span><span>${f.cast.map(a=>a.name).join(', ')}</span></div>
@@ -1754,18 +1760,18 @@ function pickScript(idx) {
 function confirmTitle(customTitle) {
   const script = window._pendingPickedScript;
   if (!script) return;
-  if (customTitle) script.title = customTitle;
   window._pendingPickedScript = null;
   document.getElementById('dialog-container').innerHTML = '';
 
   game.currentFilm = createNewFilm();
   game.currentFilm.script = script;
+  game.currentFilm.movieTitle = customTitle || script.title;
   game.currentFilm.genre = script.genre;
   game.currentFilm.budget = script.baseCost;
   game.currentFilm.marketingBudget = 5;
   game.weeksWithoutFilm = 0;
 
-  addNews('New project: "' + script.title + '" (' + script.genre + ') — ' + script.qualityLabel + ' script!');
+  addNews('New project: "' + filmTitle(game.currentFilm) + '" (' + script.genre + ') — ' + script.qualityLabel + ' script!');
   showScreen('production');
 }
 
@@ -1817,7 +1823,7 @@ function startFilming() {
   f.phase = 'filming';
   f.weeksInPhase = 0;
 
-  addNews('Cameras rolling on "' + f.script.title + '"! Budget: ' + formatMoney(totalCost));
+  addNews('Cameras rolling on "' + filmTitle(f) + '"! Budget: ' + formatMoney(totalCost));
   updateStatsBar();
   renderProduction();
 }
@@ -1842,7 +1848,7 @@ function doTestScreening() {
   game.funds -= 1; // $1M cost
   // Test score = quality + noise
   f.testScreenScore = clamp(f.quality + randInt(-15, 15), 1, 100);
-  addNews('Test screening for "' + f.script.title + '": Score ' + f.testScreenScore + '/100');
+  addNews('Test screening for "' + filmTitle(f) + '": Score ' + f.testScreenScore + '/100');
   updateStatsBar();
   renderCurrentScreen();
 }
@@ -1871,11 +1877,11 @@ function releaseFilm() {
   const repChange = Math.round((f.quality - 50) / 10);
   game.reputation = clamp(game.reputation + repChange, 0, 100);
 
-  addNews('"' + f.script.title + '" has been released! Critics say: "' + f.reviews[0] + '"');
+  addNews('"' + filmTitle(f) + '" has been released! Critics say: "' + f.reviews[0] + '"');
 
   // Show release summary dialog
   showDialog('Film Released!', `
-    <strong>"${f.script.title}"</strong> (${f.script.genre})<br><br>
+    <strong>"${filmTitle(f)}"</strong> (${f.script.genre})<br><br>
     Quality: ${f.quality}/100 ${starsHtml(Math.round(f.quality/20))}<br>
     Director: ${f.director.name}<br>
     Cast: ${f.cast.map(a=>a.name).join(', ')}<br><br>
