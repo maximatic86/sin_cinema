@@ -1025,11 +1025,6 @@ function endTurn() {
       return;
     }
 
-    if (game.week > 52) {
-      showHotseatResults();
-      return;
-    }
-
     game.turnPhase = 0;
     loadPlayer(0);
   } else {
@@ -1043,6 +1038,13 @@ function endTurn() {
   showDialog('Player ' + (game.currentPlayerIndex + 1) + '\'s Turn',
     '<strong>' + game.companyName + '</strong> — it\'s your turn!<br>Funds: ' + formatMoney(game.funds) + ' | Reputation: ' + game.reputation + '/100',
     [{text: 'OK', action: () => {}}]);
+}
+
+function confirmEndGame() {
+  showDialog('End Game?', 'Are you sure both players want to end the game and see final results?', [
+    { text: 'Keep Playing', action: () => {} },
+    { text: 'End Game', action: () => { saveCurrentPlayer(); showHotseatResults(); } }
+  ]);
 }
 
 function showHotseatResults() {
@@ -1378,6 +1380,12 @@ function renderOffice() {
       </tr>`;
     });
     html += '</table>';
+  }
+
+  if (game.mode === 'hotseat') {
+    html += '<div style="margin-top:16px;text-align:center;">';
+    html += '<button class="mac-btn" onclick="confirmEndGame()" style="color:#c0392b;">End Game &amp; See Results</button>';
+    html += '</div>';
   }
 
   c.innerHTML = html;
